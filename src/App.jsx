@@ -18,6 +18,8 @@ function App() {
           Learn React
         </a>
       </header>
+
+      <h1>Wordle</h1>
     </div>
   );
 }
