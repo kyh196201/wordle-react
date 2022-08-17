@@ -1,3 +1,5 @@
+import Button from '@/Button';
+
 import logo from './logo.svg';
 import './App.css';
 
@@ -20,6 +22,8 @@ function App() {
       </header>
 
       <h1>Wordle</h1>
+
+      <Button />
     </div>
   );
 }
