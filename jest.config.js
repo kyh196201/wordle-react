@@ -1,17 +1,18 @@
 module.exports = {
   moduleFileExtensions: ['js', 'json', 'jsx', 'ts', 'tsx', 'json'],
   transform: {
-      '^.+\\.(js|jsx)?$': 'babel-jest',
-      '^.+\\.svg$': '<rootDir>/svgTransform.js',
+    '^.+\\.(js|jsx)?$': 'babel-jest',
+    '^.+\\.svg$': '<rootDir>/svgTransform.js',
   },
   testEnvironment: 'jsdom',
   moduleNameMapper: {
-      '^@/(.*)$': '<rootDir>/$1',
-      '\\.(css|less|sass|scss)$': '<rootDir>/__mocks__/styleMock.js',
-      '\\.(gif|ttf|eot|svg)$': '<rootDir>/__mocks__/fileMock.js'
+    '^@/(.*)$': '<rootDir>/src/$1',
+    '\\.(css|less|sass|scss)$': '<rootDir>/__mocks__/styleMock.js',
+    '\\.(gif|ttf|eot|svg)$': '<rootDir>/__mocks__/fileMock.js',
   },
   testMatch: [
-      '<rootDir>/**/*.test.(js|jsx|ts|tsx)', '<rootDir>/(tests/unit/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx))'
+    '<rootDir>/**/*.test.(js|jsx|ts|tsx)',
+    '<rootDir>/(tests/unit/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx))',
   ],
   transformIgnorePatterns: ['<rootDir>/node_modules/'],
   setupFilesAfterEnv: ['<rootDir>/src/setupTests.js'],

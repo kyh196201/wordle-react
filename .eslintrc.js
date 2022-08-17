@@ -20,6 +20,9 @@ module.exports = {
   },
   plugins: ['react'],
   rules: {
+    // @TODO: 해결하기..
+    'import/no-unresolved': 0,
+    'import/extensions': 0,
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'react/jsx-uses-react': 0,
     'react/react-in-jsx-scope': 0,
