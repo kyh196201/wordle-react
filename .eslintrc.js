@@ -19,10 +19,18 @@ module.exports = {
     },
   },
   plugins: ['react'],
+  settings: {
+    'import/resolver': {
+      'eslint-import-resolver-custom-alias': {
+        alias: {
+          '@': './src',
+          '@/components': './src/components',
+        },
+        extensions: ['.js', '.jsx'],
+      },
+    },
+  },
   rules: {
-    // @TODO: 해결하기..
-    'import/no-unresolved': 0,
-    'import/extensions': 0,
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'react/jsx-uses-react': 0,
     'react/react-in-jsx-scope': 0,
