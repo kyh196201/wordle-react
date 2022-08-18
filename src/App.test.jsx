@@ -8,4 +8,15 @@ describe('<App />', () => {
 
     expect(container).toHaveTextContent('Wordle');
   });
+
+  // @TODO: remove this
+  it('renders button', () => {
+    const { getByText } = render(<App />);
+
+    expect(
+      getByText('버튼이에용', {
+        selector: 'button',
+      }),
+    ).toBeInTheDocument();
+  });
 });
