@@ -1,11 +1,9 @@
-import Button from '@/components/Button';
+import Header from '@/components/Header';
 
 function App() {
   return (
     <div className="App">
-      <h1>Wordle</h1>
-
-      <Button />
+      <Header />
     </div>
   );
 }
