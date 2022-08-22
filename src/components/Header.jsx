@@ -11,7 +11,7 @@ const Logo = styled.h1({
   textAlign: 'center',
   lineHeight: '4rem',
   fontSize: '2.8rem',
-  fontWeight: 'bold',
+  fontWeight: '700',
 });
 
 export default function Header() {
