@@ -30,10 +30,16 @@ module.exports = {
       },
     },
   },
+  // @NOTE https://eslint.org/docs/latest/user-guide/configuring/language-options#specifying-globals
+  globals: {
+    context: 'readonly',
+  },
   rules: {
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'react/jsx-uses-react': 0,
     'react/react-in-jsx-scope': 0,
+    'react/prop-types': 0,
+    'react/no-array-index-key': 0,
     // 'linebreak-style': [2, 'windows'],
     'prettier/prettier': [
       'error',
