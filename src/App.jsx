@@ -2,6 +2,8 @@ import styled from '@emotion/styled';
 
 import Header from '@/components/Header';
 
+import WordRow from '@/components/WordRow';
+
 const Container = styled.div({
   display: 'flex',
   flexDirection: 'column',
@@ -17,7 +19,10 @@ function App() {
     <Container className="App">
       <Header />
 
-      <Main>게임 영역</Main>
+      <Main>
+        <WordRow word="hello" />
+        <WordRow word="plane" />
+      </Main>
     </Container>
   );
 }
