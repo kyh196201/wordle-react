@@ -2,10 +2,12 @@ import { MAX_WORD_LENGTH } from '@/constants/settings';
 
 import LetterBox from '@/components/LetterBox';
 
-export default function WordRow({ word = '' }) {
-  const lettersRemaining = MAX_WORD_LENGTH - word.length;
+// @TODO 나중에 입력하는 Row 만들때 사용하기
 
-  const letters = word.split('').concat(Array(lettersRemaining).fill(''));
+export default function InputRow({ input = '' }) {
+  const lettersRemaining = MAX_WORD_LENGTH - input.length;
+
+  const letters = input.split('').concat(Array(lettersRemaining).fill(''));
 
   return (
     <div>

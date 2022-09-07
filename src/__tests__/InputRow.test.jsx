@@ -1,11 +1,11 @@
 import { render } from '@testing-library/react';
 
-import WordRow from '@/components/WordRow';
+import InputRow from '@/components/InputRow';
 
 import { MAX_WORD_LENGTH } from '@/constants/settings';
 
-function renderWordRow(word) {
-  return render(<WordRow word={word} />);
+function renderInputRow(input) {
+  return render(<InputRow input={input} />);
 }
 
 /**
@@ -16,14 +16,14 @@ function renderWordRow(word) {
  * ''를 텍스트로 가지는 엘리먼트가 있다.
  */
 
-describe('<WordRow />', () => {
+describe('<InputRow />', () => {
   context('with complete word', () => {
     it('renders each letters', () => {
-      const word = 'hello';
+      const input = 'hello';
 
-      const { queryAllByText } = renderWordRow(word);
+      const { queryAllByText } = renderInputRow(input);
 
-      word.split('').forEach(char => {
+      input.split('').forEach(char => {
         expect(queryAllByText(char).length).not.toBe(0);
       });
     });
@@ -31,11 +31,11 @@ describe('<WordRow />', () => {
 
   context('without complete word', () => {
     it('renders each letters and renders empty cells', () => {
-      const word = 'hel';
+      const input = 'hel';
 
-      const { queryAllByText, container } = renderWordRow(word);
+      const { queryAllByText, container } = renderInputRow(input);
 
-      word.split('').forEach(char => {
+      input.split('').forEach(char => {
         expect(queryAllByText(char).length).not.toBe(0);
       });
 
@@ -45,7 +45,7 @@ describe('<WordRow />', () => {
 
   context('with empty word', () => {
     it('renders empty cells', () => {
-      const { container } = renderWordRow('');
+      const { container } = renderInputRow('');
 
       expect(container.querySelectorAll('span').length).toBe(MAX_WORD_LENGTH);
     });
