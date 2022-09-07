@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
 
 import Header from '@/components/Header';
+import Board from './components/Board';
 
-import WordRow from '@/components/WordRow';
+import { GUESS } from './fixtures/guesses';
 
 const Container = styled.div({
   display: 'flex',
@@ -15,13 +16,14 @@ const Main = styled.main({
 });
 
 function App() {
+  const guesses = [GUESS];
+
   return (
     <Container className="App">
       <Header />
 
       <Main>
-        <WordRow word="hello" />
-        <WordRow word="plane" />
+        <Board guesses={guesses} />
       </Main>
     </Container>
   );
