@@ -2,6 +2,8 @@ import { render } from '@testing-library/react';
 
 import Board from '@/components/Board';
 
+import { GUESS } from '@/fixtures/guesses';
+
 function renderBoard(guesses) {
   return render(<Board guesses={guesses} />);
 }
@@ -17,13 +19,17 @@ describe('<Board />', () => {
   });
 
   context('with guesses', () => {
-    const guesses = ['apple', 'taffy', 'straw'];
+    const guesses = [GUESS];
 
     it('renders guesses', () => {
-      const { container } = renderBoard(guesses);
+      const { queryAllByText } = renderBoard(guesses);
 
       guesses.forEach(guess => {
-        expect(container).toHaveTextContent(guess);
+        guess.forEach(word => {
+          const letters = queryAllByText(word.letter);
+
+          expect(letters.length).not.toBe(0);
+        });
       });
     });
   });
