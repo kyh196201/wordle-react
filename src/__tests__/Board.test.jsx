@@ -2,28 +2,40 @@ import { render } from '@testing-library/react';
 
 import Board from '@/components/Board';
 
-function renderBoard(words) {
-  return render(<Board words={words} />);
+function renderBoard(guesses) {
+  return render(<Board guesses={guesses} />);
 }
 
 describe('<Board />', () => {
-  const WORDS = ['apple', 'plane', 'works'];
+  it('renders 6 rows', () => {
+    const { container } = renderBoard([]);
 
-  context('with words', () => {
-    it('renders words', () => {
-      const { container } = renderBoard(WORDS);
+    const wrapper = container.firstElementChild;
+    const rows = wrapper.querySelectorAll('div');
 
-      expect(container).toHaveTextContent('apple');
-      expect(container).toHaveTextContent('plane');
-      expect(container).toHaveTextContent('works');
+    expect(rows.length).toBe(6);
+  });
+
+  context('with guesses', () => {
+    const guesses = ['apple', 'taffy', 'straw'];
+
+    it('renders guesses', () => {
+      const { container } = renderBoard(guesses);
+
+      guesses.forEach(guess => {
+        expect(container).toHaveTextContent(guess);
+      });
     });
   });
 
-  context('without words', () => {
-    it('renders nothing', () => {
+  context('without guesses', () => {
+    it('renders 6 empty rows', () => {
       const { container } = renderBoard([]);
 
-      expect(container).not.toHaveTextContent('apple');
+      const wrapper = container.firstElementChild;
+      const rows = wrapper.querySelectorAll('div');
+
+      expect(rows.length).toBe(6);
     });
   });
 });
