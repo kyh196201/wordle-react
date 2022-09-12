@@ -4,8 +4,8 @@ import Board from '@/components/Board';
 
 import { GUESS } from '@/fixtures/guesses';
 
-function renderBoard(guesses) {
-  return render(<Board guesses={guesses} />);
+function renderBoard(guesses, currentGuess) {
+  return render(<Board guesses={guesses} currentGuess={currentGuess} />);
 }
 
 describe('<Board />', () => {
@@ -36,7 +36,28 @@ describe('<Board />', () => {
 
   context('without guesses', () => {
     it('renders 6 empty rows', () => {
-      const { container } = renderBoard([]);
+      const { container } = renderBoard();
+
+      const wrapper = container.firstElementChild;
+      const rows = wrapper.querySelectorAll('div');
+
+      expect(rows.length).toBe(6);
+    });
+  });
+
+  context('with current guess', () => {
+    const currentGuess = 'apple';
+
+    it('renders current guess row', () => {
+      const { container } = renderBoard([], currentGuess);
+
+      expect(container).toHaveTextContent(currentGuess);
+    });
+  });
+
+  context('without current guess', () => {
+    it('renders 6 empty rows', () => {
+      const { container } = renderBoard();
 
       const wrapper = container.firstElementChild;
       const rows = wrapper.querySelectorAll('div');
