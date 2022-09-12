@@ -1,4 +1,8 @@
-import guessReducer, { addGuess, initialState } from '@/store/guessSlice';
+import guessReducer, {
+  addGuess,
+  updateCurrentGuess,
+  initialState,
+} from '@/store/guessSlice';
 
 import { GUESS } from '@/fixtures/guesses';
 
@@ -8,6 +12,7 @@ describe('guessReducer', () => {
 
     expect(state).toEqual({
       guesses: [],
+      currentGuess: '',
     });
   });
 
@@ -17,6 +22,14 @@ describe('guessReducer', () => {
         const state = guessReducer(initialState, addGuess(GUESS));
 
         expect(state.guesses).toHaveLength(1);
+      });
+    });
+
+    describe('updateCurrentGuess', () => {
+      it('should update current guess', () => {
+        const state = guessReducer(initialState, updateCurrentGuess('apple'));
+
+        expect(state.currentGuess).toBe('apple');
       });
     });
   });
