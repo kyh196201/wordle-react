@@ -11,19 +11,34 @@ function renderBoardContainer() {
 }
 
 describe('<BoardContainer />', () => {
+  useSelector.mockImplementation(selector =>
+    selector({
+      guess: {
+        currentGuess: given.currentGuess,
+      },
+    }),
+  );
+
   context('with current guess', () => {
-    useSelector.mockImplementation(selector =>
-      selector({
-        guess: {
-          currentGuess: 'apple',
-        },
-      }),
-    );
+    given('currentGuess', () => 'apple');
 
     it('renders current guess', () => {
       const { container } = renderBoardContainer();
 
       expect(container).toHaveTextContent('apple');
+    });
+  });
+
+  context('without current guess', () => {
+    given('currentGuess', () => '');
+
+    it('renders 6 empty rows', () => {
+      const { container } = renderBoardContainer();
+
+      const wrapper = container.firstElementChild;
+      const rows = wrapper.querySelectorAll('div');
+
+      expect(rows.length).toBe(6);
     });
   });
 });
