@@ -1,9 +1,7 @@
 import styled from '@emotion/styled';
 
 import Header from '@/components/Header';
-import Board from './components/Board';
-
-import { GUESS } from './fixtures/guesses';
+import BoardContainer from './containers/BoardContainer';
 
 const Container = styled.div({
   display: 'flex',
@@ -16,14 +14,12 @@ const Main = styled.main({
 });
 
 function App() {
-  const guesses = [GUESS];
-
   return (
     <Container className="App">
       <Header />
 
       <Main>
-        <Board guesses={guesses} />
+        <BoardContainer />
       </Main>
     </Container>
   );
