@@ -33,6 +33,7 @@ module.exports = {
   // @NOTE https://eslint.org/docs/latest/user-guide/configuring/language-options#specifying-globals
   globals: {
     context: 'readonly',
+    given: 'readonly',
   },
   rules: {
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],

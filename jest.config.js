@@ -25,5 +25,6 @@ module.exports = {
      * https://www.npmjs.com/package/jest-plugin-context
      */
     'jest-plugin-context/setup',
+    'given2/setup',
   ],
 };
