@@ -2,11 +2,13 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import guessReducer, {
+  initialState,
   addGuess,
   updateCurrentGuess,
   addLetter,
   addLetterToCurrentGuess,
-  initialState,
+  removeLetter,
+  removeLetterFromCurrentGuess,
 } from '@/store/guessSlice';
 
 import { GUESS } from '@/fixtures/guesses';
@@ -83,6 +85,54 @@ describe('guessReducer', () => {
 
         it('does not dispatch addLetter', () => {
           store.dispatch(addLetterToCurrentGuess('a'));
+
+          const actions = store.getActions();
+
+          expect(actions.length).toBe(0);
+        });
+      });
+    });
+
+    describe('removeLetter', () => {
+      it('removes last letter of current guess', () => {
+        const state = guessReducer({ currentGuess: 'apple' }, removeLetter());
+
+        expect(state.currentGuess).toBe('appl');
+      });
+    });
+
+    describe('removeLetterFromCurrentGuess', () => {
+      context('when current guess has length', () => {
+        // setup store
+        beforeEach(() => {
+          store = mockStore({
+            guess: {
+              currentGuess: 'apple',
+            },
+          });
+        });
+
+        it('removes last letter of current guess', () => {
+          store.dispatch(removeLetterFromCurrentGuess());
+
+          const actions = store.getActions();
+
+          expect(actions[0]).toEqual(removeLetter());
+        });
+      });
+
+      context('when current guess has no length', () => {
+        // setup store
+        beforeEach(() => {
+          store = mockStore({
+            guess: {
+              currentGuess: '',
+            },
+          });
+        });
+
+        it('does not remove letter', () => {
+          store.dispatch(removeLetterFromCurrentGuess());
 
           const actions = store.getActions();
 

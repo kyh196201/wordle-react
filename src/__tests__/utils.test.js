@@ -1,7 +1,9 @@
-import { isAlphabet } from '@/utils';
+import { isAlphabet, isBackspace } from '@/utils';
+
+import { KEYS } from '@/constants/settings';
 
 describe('isAlphabet', () => {
-  it('알파벳인지 확인한다.', () => {
+  it('checks if key is a alphabet', () => {
     expect(isAlphabet('a')).toBe(true);
 
     expect(isAlphabet('B')).toBe(true);
@@ -11,5 +13,19 @@ describe('isAlphabet', () => {
     expect(isAlphabet()).toBe(false);
 
     expect(isAlphabet('1')).toBe(false);
+  });
+});
+
+describe('isBackspace', () => {
+  it('checks if key is a Backspace', () => {
+    expect(isBackspace(KEYS.BACKSPACE)).toBe(true);
+
+    expect(isBackspace('Backspace')).toBe(true);
+
+    expect(isBackspace(KEYS.ENTER)).toBe(false);
+
+    expect(isBackspace('123')).toBe(false);
+
+    expect(isBackspace()).toBe(false);
   });
 });

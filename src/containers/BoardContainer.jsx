@@ -5,9 +5,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   addLetterToCurrentGuess,
   currentGuessSelector,
+  removeLetterFromCurrentGuess,
 } from '@/store/guessSlice';
 
-import { isAlphabet } from '@/utils';
+import { isAlphabet, isBackspace } from '@/utils';
 
 import Board from '@/components/Board';
 
@@ -15,7 +16,6 @@ export default function BoardContainer() {
   const dispatch = useDispatch();
   const currentGuess = useSelector(currentGuessSelector);
 
-  // @TODO 키 입력 시 currentGuess 변경하는 로직
   const onKeyUp = event => {
     const { key } = event;
 
@@ -24,13 +24,22 @@ export default function BoardContainer() {
      * - key가 엔터일 경우
      * - key가 백스페이스일 경우
      */
-    if (!isAlphabet(key)) return;
+    if (isAlphabet(key)) {
+      dispatch(addLetterToCurrentGuess(key));
 
-    dispatch(addLetterToCurrentGuess(key));
+      return;
+    }
+
+    if (isBackspace(key)) {
+      dispatch(removeLetterFromCurrentGuess());
+
+      return;
+    }
+
+    console.log('key', key);
   };
 
   useEffect(() => {
-    // @TODO keydown으로 변경
     document.addEventListener('keyup', onKeyUp);
 
     return () => {

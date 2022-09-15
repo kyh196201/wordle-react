@@ -26,6 +26,12 @@ export const guessSlice = createSlice({
     addLetter: (state, action) => {
       state.currentGuess += action.payload;
     },
+
+    removeLetter: state => {
+      const { currentGuess } = state;
+
+      state.currentGuess = currentGuess.slice(0, -1);
+    },
   },
 });
 
@@ -37,7 +43,8 @@ const canAddLetterSelector = state => {
 };
 
 // Actions
-export const { addGuess, updateCurrentGuess, addLetter } = guessSlice.actions;
+export const { addGuess, updateCurrentGuess, addLetter, removeLetter } =
+  guessSlice.actions;
 
 // currentGuess에 글자 더하는 thunk action
 export function addLetterToCurrentGuess(letter = '') {
@@ -50,6 +57,23 @@ export function addLetterToCurrentGuess(letter = '') {
     }
 
     dispatch(addLetter(letter));
+  };
+}
+
+export function removeLetterFromCurrentGuess() {
+  return (dispatch, getState) => {
+    const state = getState();
+    const {
+      guess: { currentGuess },
+    } = state;
+
+    const canRemoveLetter = currentGuess.length > 0;
+
+    if (!canRemoveLetter) {
+      return;
+    }
+
+    dispatch(removeLetter());
   };
 }
 

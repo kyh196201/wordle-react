@@ -8,4 +8,9 @@ export const STATUS = {
   MISS: 'miss', // 글자가 없음
 };
 
+export const KEYS = {
+  ENTER: 'Enter',
+  BACKSPACE: 'Backspace',
+};
+
 export default {};
