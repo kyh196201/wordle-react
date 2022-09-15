@@ -22,6 +22,10 @@ export const guessSlice = createSlice({
       state.currentGuess = payload;
     },
 
+    emptyCurrentGuess: state => {
+      state.currentGuess = '';
+    },
+
     // current guess에 글자 붙이기
     addLetter: (state, action) => {
       state.currentGuess += action.payload;
@@ -38,13 +42,24 @@ export const guessSlice = createSlice({
 // Selectors
 export const currentGuessSelector = state => state.guess.currentGuess;
 
+export const guessesSelector = state => state.guess.guesses;
+
 const canAddLetterSelector = state => {
   return state.guess.currentGuess.length < MAX_WORD_LENGTH;
 };
 
+const canAddGuessSelector = state => {
+  return state.guess.currentGuess.length === MAX_WORD_LENGTH;
+};
+
 // Actions
-export const { addGuess, updateCurrentGuess, addLetter, removeLetter } =
-  guessSlice.actions;
+export const {
+  addGuess,
+  updateCurrentGuess,
+  emptyCurrentGuess,
+  addLetter,
+  removeLetter,
+} = guessSlice.actions;
 
 // currentGuess에 글자 더하는 thunk action
 export function addLetterToCurrentGuess(letter = '') {
@@ -74,6 +89,34 @@ export function removeLetterFromCurrentGuess() {
     }
 
     dispatch(removeLetter());
+  };
+}
+
+export function addNewGuess(showAlert) {
+  return (dispatch, getState) => {
+    const state = getState();
+
+    const currentGuess = currentGuessSelector(state);
+    const canAddGuess = canAddGuessSelector(state);
+
+    // 글자가 다 입력되었을 경우
+    // @TODO 단어장에 글자가 있는 경우
+    if (!canAddGuess) {
+      // @TODO toast로 대체하기
+      // https://stackoverflow.com/questions/60940636/show-alert-on-successfull-fetch-request-in-react-redux
+      showAlert();
+
+      return;
+    }
+
+    // @TODO makeGuess
+    const guess = currentGuess.split('').map(letter => ({
+      letter,
+      status: '',
+    }));
+
+    dispatch(addGuess(guess));
+    dispatch(emptyCurrentGuess());
   };
 }
 

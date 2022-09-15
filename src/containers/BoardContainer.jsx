@@ -4,17 +4,24 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import {
   addLetterToCurrentGuess,
+  addNewGuess,
   currentGuessSelector,
+  guessesSelector,
   removeLetterFromCurrentGuess,
 } from '@/store/guessSlice';
 
-import { isAlphabet, isBackspace } from '@/utils';
+import { isAlphabet, isBackspace, isEnter } from '@/utils';
 
 import Board from '@/components/Board';
 
 export default function BoardContainer() {
   const dispatch = useDispatch();
   const currentGuess = useSelector(currentGuessSelector);
+  const guesses = useSelector(guessesSelector);
+
+  const showAlert = () => {
+    window.alert('hhh');
+  };
 
   const onKeyUp = event => {
     const { key } = event;
@@ -36,6 +43,10 @@ export default function BoardContainer() {
       return;
     }
 
+    if (isEnter(key)) {
+      dispatch(addNewGuess(showAlert));
+    }
+
     console.log('key', key);
   };
 
@@ -47,5 +58,5 @@ export default function BoardContainer() {
     };
   }, []);
 
-  return <Board currentGuess={currentGuess} />;
+  return <Board currentGuess={currentGuess} guesses={guesses} />;
 }

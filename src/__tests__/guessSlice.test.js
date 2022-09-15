@@ -4,7 +4,9 @@ import thunk from 'redux-thunk';
 import guessReducer, {
   initialState,
   addGuess,
+  addNewGuess,
   updateCurrentGuess,
+  emptyCurrentGuess,
   addLetter,
   addLetterToCurrentGuess,
   removeLetter,
@@ -37,11 +39,66 @@ describe('guessReducer', () => {
       });
     });
 
+    // @TODO 스토어의 최신 상태를 가져오지 못해서 thunk action 방식으로 작성함 수정 필요
+    describe('addNewGuess', () => {
+      context('when current guess has enough length', () => {
+        beforeEach(() => {
+          store = mockStore({
+            guess: {
+              currentGuess: 'apple',
+            },
+          });
+        });
+
+        it('should add new guess and empty current guess', () => {
+          store.dispatch(addNewGuess());
+
+          const actions = store.getActions();
+
+          expect(actions[0]).toEqual(addGuess('apple'));
+          expect(actions[1]).toEqual(emptyCurrentGuess());
+        });
+      });
+
+      context('when current guess has not enough length', () => {
+        beforeEach(() => {
+          store = mockStore({
+            guess: {
+              currentGuess: 'appl',
+            },
+          });
+        });
+
+        // @TODO open toast로 변경
+        it('calls showAlert', () => {
+          const showAlert = jest.fn();
+
+          store.dispatch(addNewGuess(showAlert));
+
+          const actions = store.getActions();
+
+          expect(actions.length).toBe(0);
+          expect(showAlert).toBeCalled();
+        });
+      });
+    });
+
     describe('updateCurrentGuess', () => {
       it('should update current guess', () => {
         const state = guessReducer(initialState, updateCurrentGuess('apple'));
 
         expect(state.currentGuess).toBe('apple');
+      });
+    });
+
+    describe('emptyCurrentGuess', () => {
+      it('should empty current guess', () => {
+        const state = guessReducer(
+          { currentGuess: 'apple' },
+          emptyCurrentGuess(),
+        );
+
+        expect(state.currentGuess).toBe('');
       });
     });
 

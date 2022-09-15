@@ -14,4 +14,8 @@ export function isBackspace(key = '') {
   return key === KEYS.BACKSPACE;
 }
 
+export function isEnter(key = '') {
+  return key === KEYS.ENTER;
+}
+
 export default {};
