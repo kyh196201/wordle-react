@@ -2,6 +2,7 @@ import { MAX_CHANCES } from '@/constants/settings';
 
 import GuessRow from './GuessRow';
 import InputRow from './InputRow';
+import EmptyRow from './EmptyRow';
 
 export default function Board({ guesses = [], currentGuess = '' }) {
   const guessesLength = guesses.length;
@@ -23,8 +24,8 @@ export default function Board({ guesses = [], currentGuess = '' }) {
 
       {/* 빈 rows */}
       {emptyLength > 0 &&
-        [...Array(emptyLength)].map((v, index) => (
-          <div key={index}>{index}</div>
+        [...Array(emptyLength).keys()].map(key => (
+          <EmptyRow key={`empty${key}`} />
         ))}
     </div>
   );
