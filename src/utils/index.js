@@ -1,3 +1,4 @@
+import COLORS from '@/constants/colors';
 import { KEYS } from '@/constants/settings';
 
 export function isAlphabet(str = '') {
@@ -16,6 +17,10 @@ export function isBackspace(key = '') {
 
 export function isEnter(key = '') {
   return key === KEYS.ENTER;
+}
+
+export function getLetterBoxBackgroundColor(wordStatus = '') {
+  return COLORS[wordStatus.toUpperCase()] ?? COLORS.WHITE;
 }
 
 export default {};

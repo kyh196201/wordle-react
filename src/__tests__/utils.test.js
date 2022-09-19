@@ -1,6 +1,12 @@
-import { isAlphabet, isBackspace, isEnter } from '@/utils';
+import {
+  getLetterBoxBackgroundColor,
+  isAlphabet,
+  isBackspace,
+  isEnter,
+} from '@/utils';
 
-import { KEYS } from '@/constants/settings';
+import { KEYS, WORD_STATUS } from '@/constants/settings';
+import COLORS from '@/constants/colors';
 
 describe('isAlphabet', () => {
   it('checks if key is a alphabet', () => {
@@ -41,5 +47,25 @@ describe('isEnter', () => {
     expect(isEnter('123')).toBe(false);
 
     expect(isEnter()).toBe(false);
+  });
+});
+
+describe('getLetterBoxBackgroundColor', () => {
+  context('with word status', () => {
+    it('returns background color code', () => {
+      expect(getLetterBoxBackgroundColor(WORD_STATUS.CORRECT)).toBe(
+        COLORS.CORRECT,
+      );
+
+      expect(getLetterBoxBackgroundColor(WORD_STATUS.EXIST)).toBe(COLORS.EXIST);
+
+      expect(getLetterBoxBackgroundColor(WORD_STATUS.MISS)).toBe(COLORS.MISS);
+    });
+  });
+
+  context('without word status', () => {
+    it('returns white color cold', () => {
+      expect(getLetterBoxBackgroundColor()).toBe(COLORS.WHITE);
+    });
   });
 });
