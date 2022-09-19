@@ -1,4 +1,4 @@
-import gameReducer from '@/store/gameSlice';
+import gameReducer, { initialState, setAnswer } from '@/store/gameSlice';
 
 describe('guessReducer', () => {
   it('should return initial state', () => {
@@ -7,6 +7,17 @@ describe('guessReducer', () => {
     expect(state).toEqual({
       isGameOver: false,
       answer: '',
+    });
+  });
+
+  describe('actions', () => {
+    describe('setAnswer', () => {
+      it('should update answer', () => {
+        const apple = 'apple';
+        const state = gameReducer(initialState, setAnswer(apple));
+
+        expect(state.answer).toBe(apple);
+      });
     });
   });
 });

@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import App from './App';
 
@@ -13,11 +13,23 @@ jest.mock('react-redux');
 describe('<App />', () => {
   useSelector.mockImplementation(selector =>
     selector({
+      // @TODO 답 확인하려고 임시로 작성함 나중에 삭제
+      game: {
+        answer: '',
+      },
       guess: {
         currentGuess: given.currentGuess,
       },
     }),
   );
+
+  const dispatch = jest.fn();
+
+  useDispatch.mockImplementation(() => dispatch);
+
+  beforeEach(() => {
+    dispatch.mockClear();
+  });
 
   it('renders logo', () => {
     const { container } = renderApp();
@@ -48,5 +60,11 @@ describe('<App />', () => {
       // board div + div in board * 6
       expect(rows.length).toBe(7);
     });
+  });
+
+  it('calls dispatch', () => {
+    renderApp();
+
+    expect(dispatch).toBeCalled();
   });
 });

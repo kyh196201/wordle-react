@@ -9,7 +9,17 @@ export const initialState = {
 export const gameSlice = createSlice({
   name: 'game',
   initialState,
-  reducers: {},
+  reducers: {
+    setAnswer: (state, action) => {
+      state.answer = action.payload;
+    },
+  },
 });
+
+// Selectors
+export const answerSelector = state => state.game.answer;
+
+// Actions
+export const { setAnswer } = gameSlice.actions;
 
 export default gameSlice.reducer;

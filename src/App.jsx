@@ -1,7 +1,13 @@
 import styled from '@emotion/styled';
 
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import Header from '@/components/Header';
 import BoardContainer from './containers/BoardContainer';
+
+import { setAnswer } from './store/gameSlice';
+import { getRandomWord } from './utils/word-utils';
 
 const Container = styled.div({
   display: 'flex',
@@ -17,9 +23,19 @@ const Main = styled.main({
 });
 
 function App() {
+  const dispatch = useDispatch();
+  const answer = useSelector(state => state.game.answer);
+
+  useEffect(() => {
+    const randomAnswer = getRandomWord();
+    dispatch(setAnswer(randomAnswer));
+  }, [dispatch]);
+
   return (
     <Container className="App">
       <Header />
+
+      {answer}
 
       <Main>
         <BoardContainer />
