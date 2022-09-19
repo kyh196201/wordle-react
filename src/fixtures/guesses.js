@@ -1,25 +1,25 @@
-import { STATUS } from '@/constants/settings';
+import { WORD_STATUS } from '@/constants/settings';
 
 export const GUESS = [
   {
     letter: 'a',
-    status: STATUS.CORRECT,
+    status: WORD_STATUS.CORRECT,
   },
   {
     letter: 'p',
-    status: STATUS.EXIST,
+    status: WORD_STATUS.EXIST,
   },
   {
     letter: 'p',
-    status: STATUS.EXIST,
+    status: WORD_STATUS.EXIST,
   },
   {
     letter: 'l',
-    status: STATUS.MISS,
+    status: WORD_STATUS.MISS,
   },
   {
     letter: 'e',
-    status: STATUS.CORRECT,
+    status: WORD_STATUS.CORRECT,
   },
 ];
 
