@@ -10,6 +10,9 @@ const Container = styled.div({
 });
 
 const Main = styled.main({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
   flex: 1,
 });
 
