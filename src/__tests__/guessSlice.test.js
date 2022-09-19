@@ -14,6 +14,7 @@ import guessReducer, {
 } from '@/store/guessSlice';
 
 import { GUESS } from '@/fixtures/guesses';
+import { computeGuess } from '@/utils/word-utils';
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
@@ -44,6 +45,9 @@ describe('guessReducer', () => {
       context('when current guess has enough length', () => {
         beforeEach(() => {
           store = mockStore({
+            game: {
+              answer: 'apple',
+            },
             guess: {
               currentGuess: 'apple',
             },
@@ -55,8 +59,9 @@ describe('guessReducer', () => {
 
           const actions = store.getActions();
 
-          // expect(actions[0]).toEqual(addGuess('apple'));
-          expect(actions[0].type).toEqual(addGuess().type);
+          const guessResult = computeGuess('apple', 'apple');
+
+          expect(actions[0]).toEqual(addGuess(guessResult));
           expect(actions[1]).toEqual(emptyCurrentGuess());
         });
       });
@@ -64,6 +69,9 @@ describe('guessReducer', () => {
       context('when current guess has not enough length', () => {
         beforeEach(() => {
           store = mockStore({
+            game: {
+              answer: 'apple',
+            },
             guess: {
               currentGuess: 'appl',
             },
