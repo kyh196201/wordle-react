@@ -1,4 +1,5 @@
 import { WORD_STATUS } from '@/constants/settings';
+import WORDS from '@/constants/wordList';
 
 export function computeGuess(guess = '', answerString = '') {
   const result = [];
@@ -66,6 +67,12 @@ export function computeGuess(guess = '', answerString = '') {
   });
 
   return result;
+}
+
+export function getRandomWord() {
+  const randomIndex = Math.floor(Math.random() * WORDS.length);
+
+  return WORDS[randomIndex];
 }
 
 export default {};

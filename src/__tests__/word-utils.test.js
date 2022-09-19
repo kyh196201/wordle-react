@@ -1,6 +1,6 @@
 import { WORD_STATUS } from '@/constants/settings';
 
-import { computeGuess } from '@/utils/word-utils';
+import { computeGuess, getRandomWord } from '@/utils/word-utils';
 
 // https://github.com/hswolff/reacdle/blob/main/src/word-utils.test.ts
 describe('computeGuess', () => {
@@ -110,5 +110,13 @@ describe('computeGuess', () => {
     it('returns empty array', () => {
       expect(computeGuess('so', 'boost')).toEqual([]);
     });
+  });
+});
+
+describe('getRandomWord', () => {
+  it('returns a random word', () => {
+    const word = getRandomWord();
+
+    expect(word).not.toBe(undefined);
   });
 });
