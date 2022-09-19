@@ -1,9 +1,12 @@
+import WordRow from './WordRow';
+import LetterBox from './LetterBox';
+
 export default function GuessRow({ guess = [] }) {
   return (
-    <div>
+    <WordRow>
       {guess.map((word, index) => (
-        <span key={index}>{word.letter}</span>
+        <LetterBox key={index} letter={word.letter} />
       ))}
-    </div>
+    </WordRow>
   );
 }

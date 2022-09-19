@@ -1,8 +1,7 @@
 import { MAX_WORD_LENGTH } from '@/constants/settings';
 
 import LetterBox from '@/components/LetterBox';
-
-// @TODO 나중에 입력하는 Row 만들때 사용하기
+import WordRow from './WordRow';
 
 export default function InputRow({ input = '' }) {
   const lettersRemaining = MAX_WORD_LENGTH - input.length;
@@ -10,10 +9,10 @@ export default function InputRow({ input = '' }) {
   const letters = input.split('').concat(Array(lettersRemaining).fill(''));
 
   return (
-    <div>
+    <WordRow>
       {letters.map((letter, index) => (
         <LetterBox key={`${letter}${index}`} letter={letter} />
       ))}
-    </div>
+    </WordRow>
   );
 }
