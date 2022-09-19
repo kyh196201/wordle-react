@@ -5,7 +5,7 @@ export default function GuessRow({ guess = [] }) {
   return (
     <WordRow>
       {guess.map((word, index) => (
-        <LetterBox key={index} letter={word.letter} />
+        <LetterBox key={index} letter={word.letter} status={word.status} />
       ))}
     </WordRow>
   );
