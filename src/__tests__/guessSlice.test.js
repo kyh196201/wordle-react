@@ -46,7 +46,7 @@ describe('guessReducer', () => {
         beforeEach(() => {
           store = mockStore({
             game: {
-              answer: 'apple',
+              question: 'apple',
             },
             guess: {
               currentGuess: 'apple',
@@ -70,7 +70,7 @@ describe('guessReducer', () => {
         beforeEach(() => {
           store = mockStore({
             game: {
-              answer: 'apple',
+              question: 'apple',
             },
             guess: {
               currentGuess: 'appl',
@@ -79,7 +79,7 @@ describe('guessReducer', () => {
         });
 
         // @TODO open toast로 변경
-        it('calls showAlert', () => {
+        it('calls showAlert with "단어를 모두 입력해주세요."', () => {
           const showAlert = jest.fn();
 
           store.dispatch(addNewGuess(showAlert));
@@ -87,7 +87,7 @@ describe('guessReducer', () => {
           const actions = store.getActions();
 
           expect(actions.length).toBe(0);
-          expect(showAlert).toBeCalled();
+          expect(showAlert).toBeCalledWith('단어를 모두 입력해주세요.');
         });
       });
     });

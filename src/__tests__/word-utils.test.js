@@ -1,6 +1,11 @@
 import { WORD_STATUS } from '@/constants/settings';
+import { CORRECT_GUESS, GUESS as INCORRECT_GUESS } from '@/fixtures/guesses';
 
-import { computeGuess, getRandomWord } from '@/utils/word-utils';
+import {
+  computeGuess,
+  getRandomWord,
+  isCorrectAnswer,
+} from '@/utils/word-utils';
 
 // https://github.com/hswolff/reacdle/blob/main/src/word-utils.test.ts
 describe('computeGuess', () => {
@@ -118,5 +123,15 @@ describe('getRandomWord', () => {
     const word = getRandomWord();
 
     expect(word).not.toBe(undefined);
+  });
+});
+
+describe('isCorrectAnswer', () => {
+  it('test', () => {
+    expect(isCorrectAnswer(CORRECT_GUESS)).toBe(true);
+
+    expect(isCorrectAnswer()).toBe(false);
+
+    expect(isCorrectAnswer(INCORRECT_GUESS)).toBe(false);
   });
 });

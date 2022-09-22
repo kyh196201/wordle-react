@@ -9,6 +9,7 @@ import {
   guessesSelector,
   removeLetterFromCurrentGuess,
 } from '@/store/guessSlice';
+import { checkAnswer } from '@/store/gameSlice';
 
 import { isAlphabet, isBackspace, isEnter } from '@/utils';
 
@@ -19,8 +20,8 @@ export default function BoardContainer() {
   const currentGuess = useSelector(currentGuessSelector);
   const guesses = useSelector(guessesSelector);
 
-  const showAlert = () => {
-    window.alert('hhh');
+  const showAlert = (message = '') => {
+    window.alert(message);
   };
 
   const onKeyUp = event => {
@@ -45,9 +46,11 @@ export default function BoardContainer() {
 
     if (isEnter(key)) {
       dispatch(addNewGuess(showAlert));
-    }
 
-    console.log('key', key);
+      setTimeout(() => {
+        dispatch(checkAnswer(showAlert));
+      }, 0);
+    }
   };
 
   useEffect(() => {

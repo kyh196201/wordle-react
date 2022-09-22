@@ -75,4 +75,10 @@ export function getRandomWord() {
   return WORDS[randomIndex];
 }
 
+export function isCorrectAnswer(guess = []) {
+  if (!guess.length) return false;
+
+  return guess.every(word => word.status === WORD_STATUS.CORRECT);
+}
+
 export default {};

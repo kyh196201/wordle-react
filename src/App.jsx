@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Header from '@/components/Header';
 import BoardContainer from './containers/BoardContainer';
 
-import { setAnswer } from './store/gameSlice';
+import { selectQuestion, setQuestion } from './store/gameSlice';
 import { getRandomWord } from './utils/word-utils';
 
 const Container = styled.div({
@@ -24,18 +24,18 @@ const Main = styled.main({
 
 function App() {
   const dispatch = useDispatch();
-  const answer = useSelector(state => state.game.answer);
+  const question = useSelector(selectQuestion);
 
   useEffect(() => {
-    const randomAnswer = getRandomWord();
-    dispatch(setAnswer(randomAnswer));
+    const randomQuestion = getRandomWord();
+    dispatch(setQuestion(randomQuestion));
   }, [dispatch]);
 
   return (
     <Container className="App">
       <Header />
 
-      {answer}
+      {question}
 
       <Main>
         <BoardContainer />

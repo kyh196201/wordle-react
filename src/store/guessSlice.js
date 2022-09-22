@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { MAX_WORD_LENGTH } from '@/constants/settings';
 import { computeGuess } from '@/utils/word-utils';
-import { answerSelector } from './gameSlice';
+import { selectQuestion } from './gameSlice';
 
 export const initialState = {
   guesses: [],
@@ -100,14 +100,14 @@ export function addNewGuess(showAlert) {
 
     const currentGuess = currentGuessSelector(state);
     const canAddGuess = canAddGuessSelector(state);
-    const answer = answerSelector(state);
+    const answer = selectQuestion(state);
 
     // 글자가 다 입력되었을 경우
     // @TODO 단어장에 글자가 있는 경우
     if (!canAddGuess) {
       // @TODO toast로 대체하기
       // https://stackoverflow.com/questions/60940636/show-alert-on-successfull-fetch-request-in-react-redux
-      showAlert();
+      showAlert('단어를 모두 입력해주세요.');
 
       return;
     }
@@ -115,9 +115,6 @@ export function addNewGuess(showAlert) {
     const guess = computeGuess(currentGuess, answer);
 
     dispatch(addGuess(guess));
-
-    // @TODO 정답 맞았는지 확인하는 로직
-
     dispatch(emptyCurrentGuess());
   };
 }
