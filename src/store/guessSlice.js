@@ -3,7 +3,6 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { MAX_WORD_LENGTH } from '@/constants/settings';
 import { computeGuess } from '@/utils/word-utils';
-import { selectQuestion } from './gameSlice';
 
 export const initialState = {
   guesses: [],
@@ -46,11 +45,11 @@ export const currentGuessSelector = state => state.guess.currentGuess;
 
 export const guessesSelector = state => state.guess.guesses;
 
-const canAddLetterSelector = state => {
+export const canAddLetterSelector = state => {
   return state.guess.currentGuess.length < MAX_WORD_LENGTH;
 };
 
-const canAddGuessSelector = state => {
+export const canAddGuessSelector = state => {
   return state.guess.currentGuess.length === MAX_WORD_LENGTH;
 };
 
@@ -100,7 +99,7 @@ export function addNewGuess(showAlert) {
 
     const currentGuess = currentGuessSelector(state);
     const canAddGuess = canAddGuessSelector(state);
-    const answer = selectQuestion(state);
+    const { question } = state.game;
 
     // 글자가 다 입력되었을 경우
     // @TODO 단어장에 글자가 있는 경우
@@ -112,7 +111,7 @@ export function addNewGuess(showAlert) {
       return;
     }
 
-    const guess = computeGuess(currentGuess, answer);
+    const guess = computeGuess(currentGuess, question);
 
     dispatch(addGuess(guess));
     dispatch(emptyCurrentGuess());

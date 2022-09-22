@@ -1,4 +1,5 @@
 /* eslint-disable no-param-reassign */
+import { MAX_CHANCES } from '@/constants/settings';
 import { isCorrectAnswer } from '@/utils/word-utils';
 import { createSlice } from '@reduxjs/toolkit';
 
@@ -14,6 +15,10 @@ export const gameSlice = createSlice({
     setQuestion: (state, action) => {
       state.question = action.payload;
     },
+
+    setGameOver: state => {
+      state.isGameOver = true;
+    },
   },
 });
 
@@ -21,7 +26,7 @@ export const gameSlice = createSlice({
 export const selectQuestion = state => state.game.question;
 
 // Actions
-export const { setQuestion } = gameSlice.actions;
+export const { setQuestion, setGameOver } = gameSlice.actions;
 
 export function checkAnswer(showAlert) {
   /**
@@ -41,14 +46,24 @@ export function checkAnswer(showAlert) {
    *
    * - alert game over
    */
-  return (_, getState) => {
+  return (dispatch, getState) => {
     const state = getState();
-    const { guess } = state;
+    const {
+      guess: { guesses },
+    } = state;
 
-    const answer = guess.guesses[guess.guesses.length - 1];
+    const answer = guesses[guesses.length - 1];
+    const noMoreChance = guesses.length === MAX_CHANCES;
 
     if (isCorrectAnswer(answer)) {
       showAlert('정답입니다.');
+
+      return;
+    }
+
+    if (noMoreChance) {
+      dispatch(setGameOver());
+      showAlert('게임 오버');
     }
   };
 }

@@ -5,9 +5,12 @@ import gameReducer, {
   initialState,
   setQuestion,
   checkAnswer,
+  setGameOver,
 } from '@/store/gameSlice';
 
 import { isCorrectAnswer } from '@/utils/word-utils';
+
+import { GUESS } from '@/fixtures/guesses';
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
@@ -36,22 +39,55 @@ describe('guessReducer', () => {
       });
     });
 
-    describe('checkAnswer', () => {
-      beforeEach(() => {
-        store = mockStore({
-          game: {},
-          guess: { guesses: [] },
-        });
-      });
+    describe('setGameOver', () => {
+      it('should update isGameOver', () => {
+        const state = gameReducer(initialState, setGameOver());
 
+        expect(state.isGameOver).toBeTruthy();
+      });
+    });
+
+    describe('checkAnswer', () => {
       context('when answer is correct', () => {
+        beforeEach(() => {
+          store = mockStore({
+            game: { question: 'apple' },
+            guess: { guesses: [] },
+          });
+
+          isCorrectAnswer.mockReturnValue(true);
+        });
+
         it('calls showAlert with "정답입니다." message', () => {
           const showAlert = jest.fn();
-          isCorrectAnswer.mockReturnValue(true);
 
           store.dispatch(checkAnswer(showAlert));
 
           expect(showAlert).toBeCalledWith('정답입니다.');
+        });
+      });
+
+      context('when answer is not correct and has no more chance', () => {
+        beforeEach(() => {
+          store = mockStore({
+            game: { question: 'apple' },
+            guess: { guesses: Array(6).fill(GUESS) },
+          });
+
+          isCorrectAnswer.mockReturnValue(false);
+        });
+
+        it('dispatches setGameOver and calls show alert with "게임 오버"', () => {
+          const showAlert = jest.fn();
+
+          store.dispatch(checkAnswer(showAlert));
+
+          const actions = store.getActions();
+
+          expect(actions[0]).toEqual(setGameOver());
+
+          // @TODO 토스트로 변경
+          expect(showAlert).toBeCalledWith('게임 오버');
         });
       });
     });
