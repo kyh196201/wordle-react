@@ -1,4 +1,7 @@
 import styled from '@emotion/styled';
+import { ToastContainer } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -40,6 +43,13 @@ function App() {
       <Main>
         <BoardContainer />
       </Main>
+
+      <ToastContainer
+        autoClose={3000}
+        position="top-center"
+        hideProgressBar
+        pauseOnHover={false}
+      />
     </Container>
   );
 }

@@ -20,10 +20,6 @@ export default function BoardContainer() {
   const currentGuess = useSelector(currentGuessSelector);
   const guesses = useSelector(guessesSelector);
 
-  const showAlert = (message = '') => {
-    window.alert(message);
-  };
-
   const onKeyUp = event => {
     const { key } = event;
 
@@ -45,10 +41,10 @@ export default function BoardContainer() {
     }
 
     if (isEnter(key)) {
-      dispatch(addNewGuess(showAlert));
+      dispatch(addNewGuess());
 
       setTimeout(() => {
-        dispatch(checkAnswer(showAlert));
+        dispatch(checkAnswer());
       }, 0);
     }
   };

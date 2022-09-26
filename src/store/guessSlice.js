@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 
 import { MAX_WORD_LENGTH, MESSAGES } from '@/constants/settings';
 import { computeGuess, isValidWord } from '@/utils/word-utils';
@@ -93,7 +94,7 @@ export function removeLetterFromCurrentGuess() {
   };
 }
 
-export function addNewGuess(showAlert) {
+export function addNewGuess() {
   return (dispatch, getState) => {
     const state = getState();
 
@@ -102,15 +103,14 @@ export function addNewGuess(showAlert) {
 
     // 글자가 다 입력되었을 경우
     if (currentGuess.length < MAX_WORD_LENGTH) {
-      // @TODO toast로 대체하기
       // https://stackoverflow.com/questions/60940636/show-alert-on-successfull-fetch-request-in-react-redux
-      showAlert(MESSAGES.NOT_ENOUGH_WORD);
+      toast.warn(MESSAGES.NOT_ENOUGH_WORD);
       return;
     }
 
     // 단어장에 글자가 없는 경우
     if (!isValidWord(currentGuess)) {
-      showAlert(MESSAGES.INVALID_WORD);
+      toast.warn(MESSAGES.INVALID_WORD);
       return;
     }
 

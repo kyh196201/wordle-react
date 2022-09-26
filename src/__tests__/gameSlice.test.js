@@ -1,5 +1,6 @@
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
+import { toast } from 'react-toastify';
 
 import gameReducer, {
   initialState,
@@ -17,6 +18,7 @@ const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 
 jest.mock('@/utils/word-utils');
+jest.mock('react-toastify');
 
 describe('guessReducer', () => {
   it('should return initial state', () => {
@@ -60,11 +62,9 @@ describe('guessReducer', () => {
         });
 
         it('calls showAlert with "정답입니다! 🎉" message', () => {
-          const showAlert = jest.fn();
+          store.dispatch(checkAnswer());
 
-          store.dispatch(checkAnswer(showAlert));
-
-          expect(showAlert).toBeCalledWith(MESSAGES.SUCCESS);
+          expect(toast.success).toBeCalledWith(MESSAGES.SUCCESS);
         });
       });
 
@@ -79,16 +79,13 @@ describe('guessReducer', () => {
         });
 
         it('dispatches setGameOver and calls show alert with "다음 기회에.. 😂"', () => {
-          const showAlert = jest.fn();
-
-          store.dispatch(checkAnswer(showAlert));
+          store.dispatch(checkAnswer());
 
           const actions = store.getActions();
 
           expect(actions[0]).toEqual(setGameOver());
 
-          // @TODO 토스트로 변경
-          expect(showAlert).toBeCalledWith(MESSAGES.GAMEOVER);
+          expect(toast.error).toBeCalledWith(MESSAGES.GAMEOVER);
         });
       });
     });

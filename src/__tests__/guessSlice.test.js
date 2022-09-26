@@ -1,5 +1,6 @@
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
+import { toast } from 'react-toastify';
 
 import guessReducer, {
   initialState,
@@ -19,6 +20,8 @@ import { MESSAGES } from '@/constants/settings';
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
+
+jest.mock('react-toastify');
 
 describe('guessReducer', () => {
   let store = null;
@@ -79,16 +82,13 @@ describe('guessReducer', () => {
           });
         });
 
-        // @TODO open toast로 변경
-        it('calls showAlert with "단어를 모두 입력해주세요! 👀"', () => {
-          const showAlert = jest.fn();
-
-          store.dispatch(addNewGuess(showAlert));
+        it('opens warning toast with "단어를 모두 입력해주세요! 👀"', () => {
+          store.dispatch(addNewGuess());
 
           const actions = store.getActions();
 
           expect(actions.length).toBe(0);
-          expect(showAlert).toBeCalledWith(MESSAGES.NOT_ENOUGH_WORD);
+          expect(toast.warn).toBeCalledWith(MESSAGES.NOT_ENOUGH_WORD);
         });
       });
 
@@ -104,16 +104,13 @@ describe('guessReducer', () => {
           });
         });
 
-        // @TODO open toast로 변경
         it('calls showAlert with "존재하지 않는 단어입니다. 😣"', () => {
-          const showAlert = jest.fn();
-
-          store.dispatch(addNewGuess(showAlert));
+          store.dispatch(addNewGuess());
 
           const actions = store.getActions();
 
           expect(actions.length).toBe(0);
-          expect(showAlert).toBeCalledWith(MESSAGES.INVALID_WORD);
+          expect(toast.warn).toBeCalledWith(MESSAGES.INVALID_WORD);
         });
       });
     });
