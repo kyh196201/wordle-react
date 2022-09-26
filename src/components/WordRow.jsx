@@ -5,5 +5,5 @@ const Row = styled.div({
 });
 
 export default function WordRow({ children }) {
-  return <Row>{children}</Row>;
+  return <Row className="row">{children}</Row>;
 }

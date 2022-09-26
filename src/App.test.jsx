@@ -53,12 +53,13 @@ describe('<App />', () => {
     it('renders empty board', () => {
       const { container } = renderApp();
 
-      const wrapper = container.firstElementChild;
-      const rows = wrapper.querySelectorAll('div');
+      const board = container.querySelector('.board');
 
-      // @TODO 테스트 내용 수정 필요
-      // board div + div in board * 6
-      expect(rows.length).toBe(7);
+      expect(board).not.toBeNull();
+
+      const rows = board.querySelectorAll('.row');
+
+      expect(rows.length).toBe(6);
     });
   });
 

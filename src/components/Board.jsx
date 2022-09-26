@@ -12,7 +12,7 @@ export default function Board({ guesses = [], currentGuess = '' }) {
       : MAX_CHANCES - guessesLength;
 
   return (
-    <div>
+    <div className="board">
       {/* 추측 rows */}
       {guessesLength > 0 &&
         guesses.map((guess, index) => (
