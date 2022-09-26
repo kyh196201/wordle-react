@@ -11,6 +11,7 @@ import gameReducer, {
 import { isCorrectAnswer } from '@/utils/word-utils';
 
 import { GUESS } from '@/fixtures/guesses';
+import { MESSAGES } from '@/constants/settings';
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
@@ -58,12 +59,12 @@ describe('guessReducer', () => {
           isCorrectAnswer.mockReturnValue(true);
         });
 
-        it('calls showAlert with "정답입니다." message', () => {
+        it('calls showAlert with "정답입니다! 🎉" message', () => {
           const showAlert = jest.fn();
 
           store.dispatch(checkAnswer(showAlert));
 
-          expect(showAlert).toBeCalledWith('정답입니다.');
+          expect(showAlert).toBeCalledWith(MESSAGES.SUCCESS);
         });
       });
 
@@ -77,7 +78,7 @@ describe('guessReducer', () => {
           isCorrectAnswer.mockReturnValue(false);
         });
 
-        it('dispatches setGameOver and calls show alert with "게임 오버"', () => {
+        it('dispatches setGameOver and calls show alert with "다음 기회에.. 😂"', () => {
           const showAlert = jest.fn();
 
           store.dispatch(checkAnswer(showAlert));
@@ -87,7 +88,7 @@ describe('guessReducer', () => {
           expect(actions[0]).toEqual(setGameOver());
 
           // @TODO 토스트로 변경
-          expect(showAlert).toBeCalledWith('게임 오버');
+          expect(showAlert).toBeCalledWith(MESSAGES.GAMEOVER);
         });
       });
     });

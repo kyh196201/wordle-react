@@ -15,6 +15,7 @@ import guessReducer, {
 
 import { GUESS } from '@/fixtures/guesses';
 import { computeGuess } from '@/utils/word-utils';
+import { MESSAGES } from '@/constants/settings';
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
@@ -79,7 +80,7 @@ describe('guessReducer', () => {
         });
 
         // @TODO open toast로 변경
-        it('calls showAlert with "단어를 모두 입력해주세요."', () => {
+        it('calls showAlert with "단어를 모두 입력해주세요! 👀"', () => {
           const showAlert = jest.fn();
 
           store.dispatch(addNewGuess(showAlert));
@@ -87,7 +88,7 @@ describe('guessReducer', () => {
           const actions = store.getActions();
 
           expect(actions.length).toBe(0);
-          expect(showAlert).toBeCalledWith('단어를 모두 입력해주세요.');
+          expect(showAlert).toBeCalledWith(MESSAGES.NOT_ENOUGH_WORD);
         });
       });
 
@@ -104,7 +105,7 @@ describe('guessReducer', () => {
         });
 
         // @TODO open toast로 변경
-        it('calls showAlert with "존재하지 않는 단어입니다."', () => {
+        it('calls showAlert with "존재하지 않는 단어입니다. 😣"', () => {
           const showAlert = jest.fn();
 
           store.dispatch(addNewGuess(showAlert));
@@ -112,7 +113,7 @@ describe('guessReducer', () => {
           const actions = store.getActions();
 
           expect(actions.length).toBe(0);
-          expect(showAlert).toBeCalledWith('존재하지 않는 단어입니다.');
+          expect(showAlert).toBeCalledWith(MESSAGES.INVALID_WORD);
         });
       });
     });
