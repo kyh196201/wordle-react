@@ -13,4 +13,11 @@ export const KEYS = {
   BACKSPACE: 'Backspace',
 };
 
+export const MESSAGES = {
+  GAMEOVER: '다음 기회에.. 😂',
+  SUCCESS: '정답입니다! 🎉',
+  NOT_ENOUGH_WORD: '단어를 모두 입력해주세요! 👀',
+  INVALID_WORD: '존재하지 않는 단어입니다. 😣',
+};
+
 export default {};

@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
-import { MAX_WORD_LENGTH } from '@/constants/settings';
+import { MAX_WORD_LENGTH, MESSAGES } from '@/constants/settings';
 import { computeGuess, isValidWord } from '@/utils/word-utils';
 
 export const initialState = {
@@ -104,13 +104,13 @@ export function addNewGuess(showAlert) {
     if (currentGuess.length < MAX_WORD_LENGTH) {
       // @TODO toast로 대체하기
       // https://stackoverflow.com/questions/60940636/show-alert-on-successfull-fetch-request-in-react-redux
-      showAlert('단어를 모두 입력해주세요.');
+      showAlert(MESSAGES.NOT_ENOUGH_WORD);
       return;
     }
 
     // 단어장에 글자가 없는 경우
     if (!isValidWord(currentGuess)) {
-      showAlert('존재하지 않는 단어입니다.');
+      showAlert(MESSAGES.INVALID_WORD);
       return;
     }
 

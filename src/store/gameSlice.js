@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { MAX_CHANCES } from '@/constants/settings';
+import { MAX_CHANCES, MESSAGES } from '@/constants/settings';
 import { isCorrectAnswer } from '@/utils/word-utils';
 import { createSlice } from '@reduxjs/toolkit';
 
@@ -53,17 +53,18 @@ export function checkAnswer(showAlert) {
     } = state;
 
     const answer = guesses[guesses.length - 1];
-    const noMoreChance = guesses.length === MAX_CHANCES;
 
     if (isCorrectAnswer(answer)) {
-      showAlert('정답입니다.');
+      showAlert(MESSAGES.SUCCESS);
 
       return;
     }
 
+    const noMoreChance = guesses.length === MAX_CHANCES;
+
     if (noMoreChance) {
       dispatch(setGameOver());
-      showAlert('게임 오버');
+      showAlert(MESSAGES.GAMEOVER);
     }
   };
 }
