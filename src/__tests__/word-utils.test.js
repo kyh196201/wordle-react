@@ -5,6 +5,7 @@ import {
   computeGuess,
   getRandomWord,
   isCorrectAnswer,
+  isValidWord,
 } from '@/utils/word-utils';
 
 // https://github.com/hswolff/reacdle/blob/main/src/word-utils.test.ts
@@ -133,5 +134,17 @@ describe('isCorrectAnswer', () => {
     expect(isCorrectAnswer()).toBe(false);
 
     expect(isCorrectAnswer(INCORRECT_GUESS)).toBe(false);
+  });
+});
+
+describe('isValidWord', () => {
+  it('checks if it is in word dictionary', () => {
+    expect(isValidWord('start')).toBeTruthy();
+
+    expect(isValidWord('colas')).toBeTruthy();
+
+    expect(isValidWord('aaaab')).toBeFalsy();
+
+    expect(isValidWord('aaaac')).toBeFalsy();
   });
 });

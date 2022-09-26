@@ -81,4 +81,20 @@ export function isCorrectAnswer(guess = []) {
   return guess.every(word => word.status === WORD_STATUS.CORRECT);
 }
 
+const inValidWords = new Set([]);
+
+export function isValidWord(word = '') {
+  if (inValidWords.has(word)) {
+    return false;
+  }
+
+  if (WORDS.includes(word)) {
+    return true;
+  }
+
+  inValidWords.add(word);
+
+  return false;
+}
+
 export default {};
