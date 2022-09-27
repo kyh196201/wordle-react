@@ -8,12 +8,17 @@ const Box = styled.span(
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '6.2rem',
-    height: '6.2rem',
-    margin: '0 0.5rem 0.5rem 0',
-    fontSize: '3.2rem',
+    width: '20%',
+    margin: '0 2.5px',
+    fontSize: '1em',
     fontWeight: 'bold',
     textTransform: 'uppercase',
+
+    '&:after': {
+      content: '""',
+      display: 'block',
+      paddingTop: '100%',
+    },
   },
   ({ status }) => ({
     color: status ? `${COLORS.WHITE}` : `${COLORS.BLACK}`,

@@ -1,8 +1,32 @@
+import styled from '@emotion/styled';
+
 import { MAX_CHANCES } from '@/constants/settings';
 
 import GuessRow from './GuessRow';
 import InputRow from './InputRow';
 import EmptyRow from './EmptyRow';
+
+const breakpoints = [360, 768, 1200];
+const mediaQueries = breakpoints.map(bp => `@media (min-width: ${bp}px)`);
+
+const Container = styled.div({
+  width: '250px',
+  fontSize: '24px',
+
+  [mediaQueries[0]]: {
+    width: '300px',
+  },
+
+  [mediaQueries[1]]: {
+    width: '350px',
+    fontSize: '28px',
+  },
+
+  [mediaQueries[2]]: {
+    width: '400px',
+    fontSize: '32px',
+  },
+});
 
 export default function Board({ guesses = [], currentGuess = '' }) {
   const guessesLength = guesses.length;
@@ -12,7 +36,7 @@ export default function Board({ guesses = [], currentGuess = '' }) {
       : MAX_CHANCES - guessesLength;
 
   return (
-    <div className="board">
+    <Container className="board">
       {/* 추측 rows */}
       {guessesLength > 0 &&
         guesses.map((guess, index) => (
@@ -27,6 +51,6 @@ export default function Board({ guesses = [], currentGuess = '' }) {
         [...Array(emptyLength).keys()].map(key => (
           <EmptyRow key={`empty${key}`} />
         ))}
-    </div>
+    </Container>
   );
 }
