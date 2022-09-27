@@ -78,14 +78,14 @@ describe('guessReducer', () => {
           isCorrectAnswer.mockReturnValue(false);
         });
 
-        it('dispatches setGameOver and calls show alert with "다음 기회에.. 😂"', () => {
+        it('dispatches setGameOver and opens toast', () => {
           store.dispatch(checkAnswer());
 
           const actions = store.getActions();
 
           expect(actions[0]).toEqual(setGameOver());
 
-          expect(toast.error).toBeCalledWith(MESSAGES.GAMEOVER);
+          expect(toast.error).toBeCalled();
         });
       });
     });

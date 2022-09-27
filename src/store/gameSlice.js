@@ -35,6 +35,7 @@ export function checkAnswer() {
     const state = getState();
     const {
       guess: { guesses },
+      game: { question },
     } = state;
 
     const answer = guesses[guesses.length - 1];
@@ -45,11 +46,14 @@ export function checkAnswer() {
       return;
     }
 
-    const noMoreChance = guesses.length === MAX_CHANCES;
+    const isGameOver = guesses.length === MAX_CHANCES;
 
-    if (noMoreChance) {
+    if (isGameOver) {
       dispatch(setGameOver());
-      toast.error(MESSAGES.GAMEOVER);
+
+      const gameOverMessage = `${MESSAGES.GAMEOVER} 정답은: ${question}`;
+
+      toast.error(gameOverMessage);
     }
   };
 }
