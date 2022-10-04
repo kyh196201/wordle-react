@@ -1,28 +1,26 @@
 import styled from '@emotion/styled';
 
 import { MAX_CHANCES } from '@/constants/settings';
+import MEDIA_QUERIES from '@/constants/media-queries';
 
 import GuessRow from './GuessRow';
 import InputRow from './InputRow';
 import EmptyRow from './EmptyRow';
 
-const breakpoints = [360, 768, 1200];
-const mediaQueries = breakpoints.map(bp => `@media (min-width: ${bp}px)`);
-
 const Container = styled.div({
   width: '250px',
   fontSize: '24px',
 
-  [mediaQueries[0]]: {
-    width: '300px',
+  [MEDIA_QUERIES[0]]: {
+    width: '280px',
   },
 
-  [mediaQueries[1]]: {
+  [MEDIA_QUERIES[1]]: {
     width: '350px',
     fontSize: '28px',
   },
 
-  [mediaQueries[2]]: {
+  [MEDIA_QUERIES[2]]: {
     width: '400px',
     fontSize: '32px',
   },
