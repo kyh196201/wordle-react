@@ -7,6 +7,7 @@ const COLORS = {
   MISS: '#787c7e',
   KEYBOARD_BG: '#d3d6da',
   KETBOARD_COLOR: '#000000',
+  OUTLINE_BLUE: '#2671dc',
 };
 
 export default COLORS;

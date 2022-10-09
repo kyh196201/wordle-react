@@ -20,9 +20,14 @@ const Key = styled.button(
     color: COLORS.KETBOARD_COLOR,
     fontSize: '14px',
     fontWeight: '600',
+    cursor: 'pointer',
 
     '&:last-child': {
       marginRight: 0,
+    },
+
+    '&:focus': {
+      outline: `2px solid ${COLORS.OUTLINE_BLUE}`,
     },
 
     [MEDIA_QUERIES[0]]: {
