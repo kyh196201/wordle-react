@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Header from '@/components/Header';
 import BoardContainer from './containers/BoardContainer';
-import KeyBoard from './components/KeyBoard';
+import KeyBoardContainer from './containers/KeyBoardContainer';
 
 import { selectQuestion, setQuestion } from './store/gameSlice';
 import { getRandomWord } from './utils/word-utils';
@@ -45,7 +45,7 @@ function App() {
         <BoardContainer />
       </Main>
 
-      <KeyBoard />
+      <KeyBoardContainer />
 
       <ToastContainer
         autoClose={3000}

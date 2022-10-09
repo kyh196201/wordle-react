@@ -71,6 +71,10 @@ const Key = styled.button(
   },
 );
 
-export default function KeyBoardButton({ text = '' }) {
-  return <Key text={text}>{text.toUpperCase()}</Key>;
+export default function KeyBoardButton({ text = '', onClick }) {
+  return (
+    <Key text={text} type="button" onClick={() => onClick(text)}>
+      {text.toUpperCase()}
+    </Key>
+  );
 }

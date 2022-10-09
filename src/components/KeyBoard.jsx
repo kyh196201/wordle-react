@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import KEYBOARD_KEYS from '@/constants/ketboard';
+import KEYBOARD_KEYS from '@/constants/keyboard';
 
 import KeyBoardButton from './KeyBoardButton';
 
@@ -20,7 +20,7 @@ const Row = styled.div({
   },
 });
 
-export default function KeyBoard() {
+export default function KeyBoard({ onClick }) {
   return (
     <Container>
       {KEYBOARD_KEYS.map((keyboardRow, index) => (
@@ -28,7 +28,11 @@ export default function KeyBoard() {
         <Row key={`row${index}`}>
           {keyboardRow.map((letter, letterIndex) => (
             // 글자
-            <KeyBoardButton key={`letter${letterIndex}`} text={letter} />
+            <KeyBoardButton
+              key={`letter${letterIndex}`}
+              text={letter}
+              onClick={onClick}
+            />
           ))}
         </Row>
       ))}
