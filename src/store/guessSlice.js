@@ -116,6 +116,8 @@ export function addNewGuess() {
 
     const guess = computeGuess(currentGuess, question);
 
+    // TODO 글자 별 상태 설정
+
     dispatch(addGuess(guess));
     dispatch(emptyCurrentGuess());
   };

@@ -3,6 +3,7 @@ import {
   isAlphabet,
   isBackspace,
   isEnter,
+  generateAlphabet,
 } from '@/utils';
 
 import { KEYS, WORD_STATUS } from '@/constants/settings';
@@ -67,5 +68,40 @@ describe('getLetterBoxBackgroundColor', () => {
     it('returns white color cold', () => {
       expect(getLetterBoxBackgroundColor()).toBe(COLORS.WHITE);
     });
+  });
+});
+
+describe('generateAlphabet', () => {
+  it('generates alphabet array', () => {
+    const expected = [
+      'a',
+      'b',
+      'c',
+      'd',
+      'e',
+      'f',
+      'g',
+      'h',
+      'i',
+      'j',
+      'k',
+      'l',
+      'm',
+      'n',
+      'o',
+      'p',
+      'q',
+      'r',
+      's',
+      't',
+      'u',
+      'v',
+      'w',
+      'x',
+      'y',
+      'z',
+    ];
+
+    expect(generateAlphabet()).toEqual(expected);
   });
 });

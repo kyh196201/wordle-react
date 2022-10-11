@@ -21,6 +21,8 @@ const Row = styled.div({
 });
 
 export default function KeyBoard({ onClick }) {
+  // TODO 키보드 상태구하는 custom hook
+
   return (
     <Container>
       {KEYBOARD_KEYS.map((keyboardRow, index) => (

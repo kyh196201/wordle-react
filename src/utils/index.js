@@ -23,4 +23,10 @@ export function getLetterBoxBackgroundColor(wordStatus = '') {
   return COLORS[wordStatus.toUpperCase()] ?? COLORS.WHITE;
 }
 
+export function generateAlphabet(capital = false) {
+  return [...Array(26)].map((_, i) =>
+    String.fromCharCode(i + (capital ? 65 : 97)),
+  );
+}
+
 export default {};
