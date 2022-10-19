@@ -18,21 +18,21 @@ export default function KeyBoardContainer() {
   const dispatch = useDispatch();
 
   // #region Event handlers
-  function handleChar(key) {
+  const handleChar = key => {
     dispatch(addLetterToCurrentGuess(key));
-  }
+  };
 
-  function handleDelete() {
+  const handleDelete = () => {
     dispatch(removeLetterFromCurrentGuess());
-  }
+  };
 
-  function handleEnter() {
+  const handleEnter = () => {
     dispatch(addNewGuess());
 
     setTimeout(() => {
       dispatch(checkAnswer());
     }, 0);
-  }
+  };
   // #endregion
 
   // bind keyup event when component mounted
@@ -62,22 +62,11 @@ export default function KeyBoardContainer() {
     };
   }, []);
 
-  // TODO: handleKeyUp과 중복 제거
-  const handleClick = (key = '') => {
-    if (isAlphabet(key)) {
-      handleChar(key);
-      return;
-    }
-
-    if (isBackspace(key)) {
-      handleDelete();
-      return;
-    }
-
-    if (isEnter(key)) {
-      handleEnter();
-    }
-  };
-
-  return <KeyBoard onClick={handleClick} />;
+  return (
+    <KeyBoard
+      onChar={handleChar}
+      onEnter={handleEnter}
+      onDelete={handleDelete}
+    />
+  );
 }

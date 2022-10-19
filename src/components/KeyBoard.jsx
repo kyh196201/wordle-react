@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 
-import KEYBOARD_KEYS from '@/constants/keyboard';
+import { KEYS } from '@/constants/settings';
+
+// import KEYBOARD_KEYS from '@/constants/keyboard';
 
 import KeyBoardButton from './KeyBoardButton';
 
@@ -20,22 +22,49 @@ const Row = styled.div({
   },
 });
 
-export default function KeyBoard({ onClick }) {
+export default function KeyBoard({ onChar, onEnter, onDelete }) {
   return (
     <Container>
-      {KEYBOARD_KEYS.map((keyboardRow, index) => (
-        // 키보드 행
-        <Row key={`row${index}`}>
-          {keyboardRow.map((letter, letterIndex) => (
+      <Row>
+        {['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'].map(
+          (letter, letterIndex) => (
             // 글자
             <KeyBoardButton
               key={`letter${letterIndex}`}
               text={letter}
-              onClick={onClick}
+              onClick={onChar}
             />
-          ))}
-        </Row>
-      ))}
+          ),
+        )}
+      </Row>
+
+      <Row>
+        {['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'].map(
+          (letter, letterIndex) => (
+            // 글자
+            <KeyBoardButton
+              key={`letter${letterIndex}`}
+              text={letter}
+              onClick={onChar}
+            />
+          ),
+        )}
+      </Row>
+
+      <Row>
+        <KeyBoardButton text={KEYS.ENTER} onClick={onEnter} />
+
+        {['z', 'x', 'c', 'v', 'b', 'n', 'm'].map((letter, letterIndex) => (
+          // 글자
+          <KeyBoardButton
+            key={`letter${letterIndex}`}
+            text={letter}
+            onClick={onChar}
+          />
+        ))}
+
+        <KeyBoardButton text={KEYS.BACKSPACE} onClick={onDelete} />
+      </Row>
     </Container>
   );
 }

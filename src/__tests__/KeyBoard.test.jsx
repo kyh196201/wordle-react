@@ -5,24 +5,35 @@ import { KEYS } from '@/constants/settings';
 import KeyBoard from '@/components/KeyBoard';
 
 describe('<KeyBoard />', () => {
-  const handleClick = jest.fn();
+  const handleChar = jest.fn();
+  const handleEnter = jest.fn();
+  const handleDelete = jest.fn();
 
   beforeEach(() => {
-    handleClick.mockClear();
+    handleChar.mockClear();
+    handleEnter.mockClear();
+    handleDelete.mockClear();
   });
 
   const renderKeyBoard = () => {
-    return render(<KeyBoard onClick={handleClick} />);
+    return render(
+      <KeyBoard
+        onChar={handleChar}
+        onEnter={handleEnter}
+        onDelete={handleDelete}
+      />,
+    );
   };
 
   it('renders keys', () => {
     const { container } = renderKeyBoard();
 
     expect(container).toHaveTextContent('ENTER');
+    expect(container).toHaveTextContent('BACKSPACE');
     expect(container).toHaveTextContent('Z');
   });
 
-  context('when clicks a keyboard button', () => {
+  context('when clicks a enter button', () => {
     it('calls handleClick', () => {
       const { getByText } = renderKeyBoard();
 
@@ -32,7 +43,33 @@ describe('<KeyBoard />', () => {
 
       fireEvent.click(button);
 
-      expect(handleClick).toBeCalledWith(ENTER);
+      expect(handleEnter).toBeCalled();
+    });
+  });
+
+  context('when clicks a backspace button', () => {
+    it('calls handleClick', () => {
+      const { getByText } = renderKeyBoard();
+
+      const { BACKSPACE } = KEYS;
+
+      const button = getByText(BACKSPACE.toUpperCase());
+
+      fireEvent.click(button);
+
+      expect(handleDelete).toBeCalled();
+    });
+  });
+
+  context('when clicks a alphabet button', () => {
+    it('calls handleClick', () => {
+      const { getByText } = renderKeyBoard();
+
+      const button = getByText('A');
+
+      fireEvent.click(button);
+
+      expect(handleChar).toBeCalled();
     });
   });
 });
