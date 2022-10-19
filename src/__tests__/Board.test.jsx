@@ -36,7 +36,7 @@ describe('<Board />', () => {
 
   context('without guesses', () => {
     it('renders 6 empty rows', () => {
-      const { container } = renderBoard();
+      const { container } = renderBoard([], '');
 
       const wrapper = container.firstElementChild;
       const rows = wrapper.querySelectorAll('div');
