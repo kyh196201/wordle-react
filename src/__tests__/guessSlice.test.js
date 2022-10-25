@@ -15,7 +15,6 @@ import guessReducer, {
 } from '@/store/guessSlice';
 
 import { GUESS } from '@/fixtures/guesses';
-import { computeGuess } from '@/utils/word-utils';
 import { MESSAGES } from '@/constants/settings';
 
 const middlewares = [thunk];
@@ -63,9 +62,7 @@ describe('guessReducer', () => {
 
           const actions = store.getActions();
 
-          const guessResult = computeGuess('apple', 'apple');
-
-          expect(actions[0]).toEqual(addGuess(guessResult));
+          expect(actions[0]).toEqual(addGuess('apple'));
           expect(actions[1]).toEqual(emptyCurrentGuess());
         });
       });

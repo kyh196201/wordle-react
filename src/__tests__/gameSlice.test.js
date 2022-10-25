@@ -11,7 +11,7 @@ import gameReducer, {
 
 import { isCorrectAnswer } from '@/utils/word-utils';
 
-import { GUESS } from '@/fixtures/guesses';
+import { GUESSES } from '@/fixtures/guesses';
 import { MESSAGES } from '@/constants/settings';
 
 const middlewares = [thunk];
@@ -72,7 +72,7 @@ describe('guessReducer', () => {
         beforeEach(() => {
           store = mockStore({
             game: { question: 'apple' },
-            guess: { guesses: Array(6).fill(GUESS) },
+            guess: { guesses: GUESSES },
           });
 
           isCorrectAnswer.mockReturnValue(false);

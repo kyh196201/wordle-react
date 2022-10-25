@@ -1,5 +1,4 @@
 import { WORD_STATUS } from '@/constants/settings';
-import { CORRECT_GUESS, GUESS as INCORRECT_GUESS } from '@/fixtures/guesses';
 
 import {
   computeGuess,
@@ -129,11 +128,11 @@ describe('getRandomWord', () => {
 
 describe('isCorrectAnswer', () => {
   it('test', () => {
-    expect(isCorrectAnswer(CORRECT_GUESS)).toBe(true);
+    expect(isCorrectAnswer('apple', 'apple')).toBe(true);
 
-    expect(isCorrectAnswer()).toBe(false);
+    expect(isCorrectAnswer('', '')).toBe(false);
 
-    expect(isCorrectAnswer(INCORRECT_GUESS)).toBe(false);
+    expect(isCorrectAnswer('apple', 'start')).toBe(false);
   });
 });
 

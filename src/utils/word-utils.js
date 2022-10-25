@@ -75,10 +75,19 @@ export function getRandomWord() {
   return WORDS[randomIndex];
 }
 
-export function isCorrectAnswer(guess = []) {
+/**
+ * 제출한 정답이 주어진 문제와 일치하는지 여부 반환
+ *
+ * @param {*} guess 입력한 정답
+ * @param {*} question 현재 문제
+ * @returns 일치할 경우 true, 다를 경우 false
+ */
+export function isCorrectAnswer(guess = '', question = '') {
   if (!guess.length) return false;
 
-  return guess.every(word => word.status === WORD_STATUS.CORRECT);
+  const guessResult = computeGuess(guess, question);
+
+  return guessResult.every(word => word.status === WORD_STATUS.CORRECT);
 }
 
 const inValidWords = new Set([]);

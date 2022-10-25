@@ -15,7 +15,7 @@ describe('<App />', () => {
     selector({
       // @TODO 답 확인하려고 임시로 작성함 나중에 삭제
       game: {
-        answer: '',
+        question: '',
       },
       guess: {
         currentGuess: given.currentGuess,

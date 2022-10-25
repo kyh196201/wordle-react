@@ -16,6 +16,9 @@ describe('<BoardContainer />', () => {
       guess: {
         currentGuess: given.currentGuess,
       },
+      game: {
+        question: 'apple',
+      },
     }),
   );
 

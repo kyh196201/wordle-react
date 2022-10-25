@@ -26,7 +26,11 @@ const Container = styled.div({
   },
 });
 
-export default function Board({ guesses = [], currentGuess = '' }) {
+export default function Board({
+  guesses = [],
+  currentGuess = '',
+  question = '',
+}) {
   const emptyLength =
     currentGuess.length > 0
       ? MAX_CHANCES - guesses.length - 1
@@ -38,7 +42,7 @@ export default function Board({ guesses = [], currentGuess = '' }) {
     <Container className="board">
       {/* 입력완료된 rows */}
       {guesses.map((guess, index) => (
-        <GuessRow key={`guess-${index}`} guess={guess} />
+        <GuessRow key={`guess-${index}`} guess={guess} question={question} />
       ))}
 
       {/* 현재 입력중인 row */}

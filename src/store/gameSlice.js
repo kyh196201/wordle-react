@@ -40,7 +40,7 @@ export function checkAnswer() {
 
     const answer = guesses[guesses.length - 1];
 
-    if (isCorrectAnswer(answer)) {
+    if (isCorrectAnswer(answer, question)) {
       toast.success(MESSAGES.SUCCESS);
 
       return;

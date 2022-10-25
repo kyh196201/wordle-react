@@ -2,10 +2,12 @@ import { render } from '@testing-library/react';
 
 import Board from '@/components/Board';
 
-import { GUESS } from '@/fixtures/guesses';
+import { GUESSES } from '@/fixtures/guesses';
 
-function renderBoard(guesses, currentGuess) {
-  return render(<Board guesses={guesses} currentGuess={currentGuess} />);
+function renderBoard(guesses, currentGuess, question) {
+  return render(
+    <Board guesses={guesses} currentGuess={currentGuess} question={question} />,
+  );
 }
 
 describe('<Board />', () => {
@@ -19,14 +21,12 @@ describe('<Board />', () => {
   });
 
   context('with guesses', () => {
-    const guesses = [GUESS];
-
     it('renders guesses', () => {
-      const { queryAllByText } = renderBoard(guesses);
+      const { queryAllByText } = renderBoard(GUESSES, '', 'apple');
 
-      guesses.forEach(guess => {
-        guess.forEach(word => {
-          const letters = queryAllByText(word.letter);
+      GUESSES.forEach(guess => {
+        guess.split('').forEach(word => {
+          const letters = queryAllByText(word);
 
           expect(letters.length).not.toBe(0);
         });
@@ -36,7 +36,7 @@ describe('<Board />', () => {
 
   context('without guesses', () => {
     it('renders 6 empty rows', () => {
-      const { container } = renderBoard([], '');
+      const { container } = renderBoard([], '', '');
 
       const wrapper = container.firstElementChild;
       const rows = wrapper.querySelectorAll('div');

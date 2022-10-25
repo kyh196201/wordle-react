@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 
 import { MAX_WORD_LENGTH, MESSAGES } from '@/constants/settings';
-import { computeGuess, isValidWord } from '@/utils/word-utils';
+import { isValidWord } from '@/utils/word-utils';
 
 export const initialState = {
   guesses: [],
@@ -19,6 +19,7 @@ export const guessSlice = createSlice({
       state.guesses.push(payload);
     },
 
+    // TODO: remove this
     updateCurrentGuess: (state, action) => {
       const { payload } = action;
       state.currentGuess = payload;
@@ -99,7 +100,6 @@ export function addNewGuess() {
     const state = getState();
 
     const currentGuess = currentGuessSelector(state);
-    const { question } = state.game;
 
     // 글자가 다 입력되었을 경우
     if (currentGuess.length < MAX_WORD_LENGTH) {
@@ -114,9 +114,7 @@ export function addNewGuess() {
       return;
     }
 
-    const guess = computeGuess(currentGuess, question);
-
-    dispatch(addGuess(guess));
+    dispatch(addGuess(currentGuess));
     dispatch(emptyCurrentGuess());
   };
 }
