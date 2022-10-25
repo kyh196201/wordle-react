@@ -1,72 +1,46 @@
 import { WORD_STATUS } from '@/constants/settings';
 import WORDS from '@/constants/wordList';
 
-export function computeGuess(guess = '', answerString = '') {
-  const result = [];
+export function getGuessStatuses(guess = '', question = '') {
+  const splitQuestion = question.split('');
+  const splitGuess = guess.split('');
 
-  if (guess.length !== answerString.length) {
-    return result;
-  }
+  // eslint-disable-next-line no-unused-vars
+  const solutionCharsTaken = splitQuestion.map(_ => false);
 
-  const answer = answerString.split('');
+  const statuses = Array.from(Array(guess.length));
 
-  const guessAsArray = guess.split('');
-
-  const answerLetterCount = {};
-
-  // alternative approaches to this logic
-  // https://github.com/rauchg/wordledge/blob/main/pages/_middleware.ts#L46-L69
-
-  guessAsArray.forEach((letter, index) => {
-    const currentAnswerLetter = answer[index];
-
-    answerLetterCount[currentAnswerLetter] = answerLetterCount[
-      currentAnswerLetter
-    ]
-      ? answerLetterCount[currentAnswerLetter] + 1
-      : 1;
-
-    let wordStatus = '';
-
-    if (currentAnswerLetter === letter) {
-      wordStatus = WORD_STATUS.CORRECT;
-    } else if (answer.includes(letter)) {
-      wordStatus = WORD_STATUS.EXIST;
-    } else {
-      wordStatus = WORD_STATUS.MISS;
+  // handle all correct cases first
+  splitGuess.forEach((letter, i) => {
+    if (letter === splitQuestion[i]) {
+      statuses[i] = WORD_STATUS.CORRECT;
+      solutionCharsTaken[i] = true;
     }
-
-    result.push({
-      letter,
-      status: wordStatus,
-    });
   });
 
-  result.forEach((curResult, resultIndex) => {
-    if (curResult.status !== WORD_STATUS.EXIST) {
+  splitGuess.forEach((letter, i) => {
+    if (statuses[i]) return;
+
+    if (!splitQuestion.includes(letter)) {
+      // handles the absent case
+      statuses[i] = WORD_STATUS.MISS;
       return;
     }
 
-    const guessLetter = guessAsArray[resultIndex];
+    // now we are left with "present"s
+    const indexOfPresentChar = splitQuestion.findIndex(
+      (x, index) => x === letter && !solutionCharsTaken[index],
+    );
 
-    answer.forEach((currentAnswerLetter, answerIndex) => {
-      if (currentAnswerLetter !== guessLetter) {
-        return;
-      }
-
-      if (result[answerIndex].status === WORD_STATUS.CORRECT) {
-        result[resultIndex].status = WORD_STATUS.MISS;
-      }
-
-      if (answerLetterCount[guessLetter] <= 0) {
-        result[resultIndex].status = WORD_STATUS.MISS;
-      }
-    });
-
-    answerLetterCount[guessLetter] -= 1;
+    if (indexOfPresentChar > -1) {
+      statuses[i] = WORD_STATUS.EXIST;
+      solutionCharsTaken[indexOfPresentChar] = true;
+    } else {
+      statuses[i] = WORD_STATUS.MISS;
+    }
   });
 
-  return result;
+  return statuses;
 }
 
 export function getRandomWord() {
@@ -85,9 +59,9 @@ export function getRandomWord() {
 export function isCorrectAnswer(guess = '', question = '') {
   if (!guess.length) return false;
 
-  const guessResult = computeGuess(guess, question);
+  const statuses = getGuessStatuses(guess, question);
 
-  return guessResult.every(word => word.status === WORD_STATUS.CORRECT);
+  return statuses.every(status => status === WORD_STATUS.CORRECT);
 }
 
 const inValidWords = new Set([]);
