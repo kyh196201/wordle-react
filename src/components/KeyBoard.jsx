@@ -4,6 +4,7 @@ import { KEYS } from '@/constants/settings';
 
 // import KEYBOARD_KEYS from '@/constants/keyboard';
 
+import { getStatuses } from '@/utils/word-utils';
 import KeyBoardButton from './KeyBoardButton';
 
 const Container = styled.div({
@@ -22,7 +23,15 @@ const Row = styled.div({
   },
 });
 
-export default function KeyBoard({ onChar, onEnter, onDelete }) {
+export default function KeyBoard({
+  onChar,
+  onEnter,
+  onDelete,
+  guesses,
+  question,
+}) {
+  const buttonStatuses = getStatuses(guesses, question);
+
   return (
     <Container>
       <Row>
@@ -32,6 +41,7 @@ export default function KeyBoard({ onChar, onEnter, onDelete }) {
             <KeyBoardButton
               key={`letter${letterIndex}`}
               text={letter}
+              status={buttonStatuses[letter]}
               onClick={onChar}
             />
           ),
@@ -45,6 +55,7 @@ export default function KeyBoard({ onChar, onEnter, onDelete }) {
             <KeyBoardButton
               key={`letter${letterIndex}`}
               text={letter}
+              status={buttonStatuses[letter]}
               onClick={onChar}
             />
           ),
@@ -59,6 +70,7 @@ export default function KeyBoard({ onChar, onEnter, onDelete }) {
           <KeyBoardButton
             key={`letter${letterIndex}`}
             text={letter}
+            status={buttonStatuses[letter]}
             onClick={onChar}
           />
         ))}

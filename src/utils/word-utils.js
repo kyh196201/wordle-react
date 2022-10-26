@@ -43,6 +43,39 @@ export function getGuessStatuses(guess = '', question = '') {
   return statuses;
 }
 
+// guesses = ['start']
+// question = 'apple'
+export function getStatuses(guesses = [], question = '') {
+  if (!guesses.length || !question) return {};
+
+  const charObj = {};
+
+  const splitQuestion = question.split('');
+
+  guesses.forEach(guess => {
+    const splitGuess = guess.split('');
+
+    splitGuess.forEach((letter, index) => {
+      // out
+      if (!splitQuestion.includes(letter)) {
+        charObj[letter] = WORD_STATUS.MISS;
+        return;
+      }
+
+      if (letter === splitQuestion[index]) {
+        charObj[letter] = WORD_STATUS.CORRECT;
+        return;
+      }
+
+      if (charObj[letter] !== 'correct') {
+        charObj[letter] = WORD_STATUS.EXIST;
+      }
+    });
+  });
+
+  return charObj;
+}
+
 export function getRandomWord() {
   const randomIndex = Math.floor(Math.random() * WORDS.length);
 

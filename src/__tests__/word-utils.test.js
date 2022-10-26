@@ -3,6 +3,7 @@ import {
   isCorrectAnswer,
   isValidWord,
   getGuessStatuses,
+  getStatuses,
 } from '@/utils/word-utils';
 
 describe('getRandomWord', () => {
@@ -60,5 +61,39 @@ describe('getGuessStatuses', () => {
       'correct',
       'miss',
     ]);
+  });
+});
+
+describe('getStatuses', () => {
+  context('with guesses and question', () => {
+    it('returns status of each alphabet', () => {
+      const guesses = ['start', 'apple'];
+      const question = 'apple';
+      const expected = {
+        a: 'correct',
+        e: 'correct',
+        s: 'miss',
+        t: 'miss',
+        r: 'miss',
+        p: 'correct',
+        l: 'correct',
+      };
+
+      expect(getStatuses(guesses, question)).toEqual(expected);
+    });
+  });
+
+  context('without guesses', () => {
+    it('returns empty object', () => {
+      const question = 'apple';
+
+      expect(getStatuses([], question)).toEqual({});
+    });
+  });
+
+  context('without question', () => {
+    it('returns empty object', () => {
+      expect(getStatuses(['apple'], '')).toEqual({});
+    });
   });
 });

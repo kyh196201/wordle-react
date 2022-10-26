@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 // import KEYBOARD_KEYS from '@/constants/ketboard';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { isAlphabet, isBackspace, isEnter } from '@/utils';
 
@@ -9,12 +9,16 @@ import {
   addLetterToCurrentGuess,
   addNewGuess,
   removeLetterFromCurrentGuess,
+  guessesSelector,
 } from '@/store/guessSlice';
-import { checkAnswer } from '@/store/gameSlice';
+import { checkAnswer, selectQuestion } from '@/store/gameSlice';
 
 import KeyBoard from '@/components/KeyBoard';
 
 export default function KeyBoardContainer() {
+  const guesses = useSelector(guessesSelector);
+  const question = useSelector(selectQuestion);
+
   const dispatch = useDispatch();
 
   // #region Event handlers
@@ -64,6 +68,8 @@ export default function KeyBoardContainer() {
 
   return (
     <KeyBoard
+      guesses={guesses}
+      question={question}
       onChar={handleChar}
       onEnter={handleEnter}
       onDelete={handleDelete}

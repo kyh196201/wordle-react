@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import COLORS from '@/constants/colors';
-import { KEYS } from '@/constants/settings';
+import { KEYS, WORD_STATUS } from '@/constants/settings';
 
 import MEDIA_QUERIES from '@/constants/media-queries';
 import backspaceIcon from '@/assets/icons/backspace.svg';
@@ -46,9 +46,20 @@ const Key = styled.button(
       fontSize: '24px',
     },
   },
-  ({ text }) => {
+  ({ text, status }) => {
+    const styles = {};
+
+    if (status === WORD_STATUS.CORRECT) {
+      styles.backgroundColor = COLORS.CORRECT;
+    } else if (status === WORD_STATUS.EXIST) {
+      styles.backgroundColor = COLORS.EXIST;
+    } else if (status === WORD_STATUS.MISS) {
+      styles.backgroundColor = COLORS.MISS;
+    }
+
     if (text === KEYS.ENTER) {
       return {
+        ...styles,
         maxWidth: '100px',
         flex: 1,
       };
@@ -56,6 +67,7 @@ const Key = styled.button(
 
     if (text === KEYS.BACKSPACE) {
       return {
+        ...styles,
         maxWidth: '100px',
         backgroundImage: `url(${backspaceIcon})`,
         backgroundRepeat: 'no-repeat',
@@ -72,13 +84,18 @@ const Key = styled.button(
       };
     }
 
-    return {};
+    return styles;
   },
 );
 
-export default function KeyBoardButton({ text = '', onClick }) {
+export default function KeyBoardButton({ text = '', status = '', onClick }) {
   return (
-    <Key text={text} type="button" onClick={() => onClick(text)}>
+    <Key
+      text={text}
+      status={status}
+      type="button"
+      onClick={() => onClick(text)}
+    >
       {text.toUpperCase()}
     </Key>
   );
