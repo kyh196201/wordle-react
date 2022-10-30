@@ -15,9 +15,10 @@ describe('<KeyBoard />', () => {
     handleDelete.mockClear();
   });
 
-  const renderKeyBoard = () => {
+  const renderKeyBoard = (disabled = false) => {
     return render(
       <KeyBoard
+        disabled={disabled}
         onChar={handleChar}
         onEnter={handleEnter}
         onDelete={handleDelete}
@@ -66,6 +67,19 @@ describe('<KeyBoard />', () => {
       fireEvent.click(button);
 
       expect(handleChar).toBeCalled();
+    });
+  });
+
+  context('when disabled', () => {
+    it('not listens click event', () => {
+      const { getByText } = renderKeyBoard(true);
+
+      // 대문자로 렌더링됨
+      const button = getByText('A');
+
+      fireEvent.click(button);
+
+      expect(handleChar).not.toBeCalled();
     });
   });
 });

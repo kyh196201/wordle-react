@@ -9,26 +9,39 @@ describe('<KeyBoardButton />', () => {
     handleClick.mockClear();
   });
 
-  const renderKeyBoardButton = text => {
-    return render(<KeyBoardButton text={text} onClick={handleClick} />);
+  const renderKeyBoardButton = ({ text, disabled = false }) => {
+    return render(
+      <KeyBoardButton text={text} disabled={disabled} onClick={handleClick} />,
+    );
   };
 
   it('renders key', () => {
-    const { container } = renderKeyBoardButton('A');
+    const { getByText } = renderKeyBoardButton({
+      text: 'a',
+      disabled: false,
+    });
 
-    expect(container).toHaveTextContent('A');
+    // 대문자로 렌더링됨
+    const button = getByText('A');
+
+    fireEvent.click(button);
+
+    expect(handleClick).toBeCalledWith('a');
   });
 
-  context('when clicks a keyboard button', () => {
-    it('calls handleClick', () => {
-      const { getByText } = renderKeyBoardButton('a');
+  context('when disabled', () => {
+    it('not calls handleClick', () => {
+      const { getByText } = renderKeyBoardButton({
+        text: 'a',
+        disabled: true,
+      });
 
       // 대문자로 렌더링됨
       const button = getByText('A');
 
       fireEvent.click(button);
 
-      expect(handleClick).toBeCalledWith('a');
+      expect(handleClick).not.toBeCalled();
     });
   });
 });

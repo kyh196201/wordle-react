@@ -55,4 +55,20 @@ describe('<KeyBoardContainer />', () => {
       });
     });
   });
+
+  context('when playing game', () => {
+    given('isGameOver', () => true);
+
+    it('listens click event', () => {
+      const { getByText } = renderKeyBoardContainer();
+
+      KEYS.forEach(text => {
+        const button = getByText(text);
+
+        fireEvent.click(button);
+
+        expect(dispatch).not.toBeCalled();
+      });
+    });
+  });
 });

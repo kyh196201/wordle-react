@@ -76,6 +76,7 @@ export default function KeyBoardContainer() {
 
   return (
     <KeyBoard
+      disabled={isGameOver}
       guesses={guesses}
       question={question}
       onChar={handleChar}

@@ -24,11 +24,12 @@ const Row = styled.div({
 });
 
 export default function KeyBoard({
+  disabled,
+  guesses,
+  question,
   onChar,
   onEnter,
   onDelete,
-  guesses,
-  question,
 }) {
   const buttonStatuses = getStatuses(guesses, question);
 
@@ -42,6 +43,7 @@ export default function KeyBoard({
               key={`letter${letterIndex}`}
               text={letter}
               status={buttonStatuses[letter]}
+              disabled={disabled}
               onClick={onChar}
             />
           ),
@@ -56,6 +58,7 @@ export default function KeyBoard({
               key={`letter${letterIndex}`}
               text={letter}
               status={buttonStatuses[letter]}
+              disabled={disabled}
               onClick={onChar}
             />
           ),
@@ -63,7 +66,11 @@ export default function KeyBoard({
       </Row>
 
       <Row>
-        <KeyBoardButton text={KEYS.ENTER} onClick={onEnter} />
+        <KeyBoardButton
+          text={KEYS.ENTER}
+          onClick={onEnter}
+          disabled={disabled}
+        />
 
         {['z', 'x', 'c', 'v', 'b', 'n', 'm'].map((letter, letterIndex) => (
           // 글자
@@ -71,11 +78,16 @@ export default function KeyBoard({
             key={`letter${letterIndex}`}
             text={letter}
             status={buttonStatuses[letter]}
+            disabled={disabled}
             onClick={onChar}
           />
         ))}
 
-        <KeyBoardButton text={KEYS.BACKSPACE} onClick={onDelete} />
+        <KeyBoardButton
+          text={KEYS.BACKSPACE}
+          onClick={onDelete}
+          disabled={disabled}
+        />
       </Row>
     </Container>
   );

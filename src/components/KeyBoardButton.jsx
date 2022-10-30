@@ -88,13 +88,19 @@ const Key = styled.button(
   },
 );
 
-export default function KeyBoardButton({ text = '', status = '', onClick }) {
+export default function KeyBoardButton({
+  text = '',
+  status = '',
+  disabled = false,
+  onClick,
+}) {
   return (
     <Key
       text={text}
       status={status}
       type="button"
       onClick={() => onClick(text)}
+      disabled={disabled}
     >
       {text.toUpperCase()}
     </Key>
