@@ -1,10 +1,10 @@
 import { render, fireEvent } from '@testing-library/react';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import KeyBoardContainer from '@/containers/KeyBoardContainer';
 
-import { KEYS } from '@/constants/settings';
+import KEYS from '@/fixtures/keys';
 
 jest.mock('react-redux');
 
@@ -17,6 +17,17 @@ describe('<KeyBoardContainer />', () => {
 
   useDispatch.mockImplementation(() => dispatch);
 
+  useSelector.mockImplementation(selector =>
+    selector({
+      game: {
+        isGameOver: given.isGameOver,
+      },
+      guess: {
+        guesses: [],
+      },
+    }),
+  );
+
   beforeEach(() => {
     dispatch.mockClear();
   });
@@ -24,45 +35,24 @@ describe('<KeyBoardContainer />', () => {
   it('renders keys', () => {
     const { container } = renderKeyBoardContainer();
 
-    expect(container).toHaveTextContent('ENTER');
-    expect(container).toHaveTextContent('Z');
-  });
-
-  context('when clicks a enter button', () => {
-    it('calls handleClick', () => {
-      const { getByText } = renderKeyBoardContainer();
-
-      const button = getByText('ENTER');
-
-      fireEvent.click(button);
-
-      expect(dispatch).toBeCalled();
+    KEYS.forEach(text => {
+      expect(container).toHaveTextContent(text);
     });
   });
 
-  context('when clicks a enter button', () => {
-    it('calls handleClick', () => {
+  context('when playing game', () => {
+    given('isGameOver', () => false);
+
+    it('listens click event', () => {
       const { getByText } = renderKeyBoardContainer();
 
-      const { BACKSPACE } = KEYS;
+      KEYS.forEach(text => {
+        const button = getByText(text);
 
-      const button = getByText(BACKSPACE.toUpperCase());
+        fireEvent.click(button);
 
-      fireEvent.click(button);
-
-      expect(dispatch).toBeCalled();
-    });
-  });
-
-  context('when clicks a alphabet button', () => {
-    it('calls handleClick', () => {
-      const { getByText } = renderKeyBoardContainer();
-
-      const button = getByText('A');
-
-      fireEvent.click(button);
-
-      expect(dispatch).toBeCalled();
+        expect(dispatch).toBeCalled();
+      });
     });
   });
 });

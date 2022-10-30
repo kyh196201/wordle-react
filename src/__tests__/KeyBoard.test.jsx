@@ -1,8 +1,8 @@
 import { render, fireEvent } from '@testing-library/react';
 
-import { KEYS } from '@/constants/settings';
-
 import KeyBoard from '@/components/KeyBoard';
+
+import KEYS from '@/fixtures/keys';
 
 describe('<KeyBoard />', () => {
   const handleChar = jest.fn();
@@ -28,18 +28,16 @@ describe('<KeyBoard />', () => {
   it('renders keys', () => {
     const { container } = renderKeyBoard();
 
-    expect(container).toHaveTextContent('ENTER');
-    expect(container).toHaveTextContent('BACKSPACE');
-    expect(container).toHaveTextContent('Z');
+    KEYS.forEach(text => {
+      expect(container).toHaveTextContent(text);
+    });
   });
 
   context('when clicks a enter button', () => {
-    it('calls handleClick', () => {
+    it('calls handleEnter', () => {
       const { getByText } = renderKeyBoard();
 
-      const { ENTER } = KEYS;
-
-      const button = getByText(ENTER.toUpperCase());
+      const button = getByText('ENTER');
 
       fireEvent.click(button);
 
@@ -48,12 +46,10 @@ describe('<KeyBoard />', () => {
   });
 
   context('when clicks a backspace button', () => {
-    it('calls handleClick', () => {
+    it('calls handleDelete', () => {
       const { getByText } = renderKeyBoard();
 
-      const { BACKSPACE } = KEYS;
-
-      const button = getByText(BACKSPACE.toUpperCase());
+      const button = getByText('BACKSPACE');
 
       fireEvent.click(button);
 
@@ -62,7 +58,7 @@ describe('<KeyBoard />', () => {
   });
 
   context('when clicks a alphabet button', () => {
-    it('calls handleClick', () => {
+    it('calls handleChar', () => {
       const { getByText } = renderKeyBoard();
 
       const button = getByText('A');
