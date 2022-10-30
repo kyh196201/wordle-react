@@ -31,10 +31,7 @@ export default function Board({
   currentGuess = '',
   question = '',
 }) {
-  const emptyLength =
-    currentGuess.length > 0
-      ? MAX_CHANCES - guesses.length - 1
-      : MAX_CHANCES - guesses.length;
+  const emptyLength = MAX_CHANCES - guesses.length - 1;
 
   const empties = emptyLength > 0 ? Array.from(Array(emptyLength)) : [];
 
@@ -46,7 +43,7 @@ export default function Board({
       ))}
 
       {/* 현재 입력중인 row */}
-      {currentGuess.length > 0 && <InputRow input={currentGuess} />}
+      {guesses.length < MAX_CHANCES && <InputRow input={currentGuess} />}
 
       {/* 빈 rows */}
       {empties.map((_, index) => (
