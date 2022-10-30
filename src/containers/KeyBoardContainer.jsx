@@ -11,13 +11,19 @@ import {
   removeLetterFromCurrentGuess,
   guessesSelector,
 } from '@/store/guessSlice';
-import { checkAnswer, selectQuestion } from '@/store/gameSlice';
+
+import {
+  checkAnswer,
+  selectIsGameOver,
+  selectQuestion,
+} from '@/store/gameSlice';
 
 import KeyBoard from '@/components/KeyBoard';
 
 export default function KeyBoardContainer() {
   const guesses = useSelector(guessesSelector);
   const question = useSelector(selectQuestion);
+  const isGameOver = useSelector(selectIsGameOver);
 
   const dispatch = useDispatch();
 
@@ -42,6 +48,8 @@ export default function KeyBoardContainer() {
   // bind keyup event when component mounted
   useEffect(() => {
     function handleKeyUp(event) {
+      if (isGameOver) return;
+
       const { key } = event;
 
       if (isAlphabet(key)) {
@@ -64,7 +72,7 @@ export default function KeyBoardContainer() {
     return () => {
       document.removeEventListener('keyup', handleKeyUp);
     };
-  }, []);
+  }, [isGameOver]);
 
   return (
     <KeyBoard

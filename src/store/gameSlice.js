@@ -26,6 +26,7 @@ export const gameSlice = createSlice({
 
 // Selectors
 export const selectQuestion = state => state.game.question;
+export const selectIsGameOver = state => state.game.isGameOver;
 
 // Actions
 export const { setQuestion, setGameOver } = gameSlice.actions;
